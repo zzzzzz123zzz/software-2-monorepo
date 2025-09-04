@@ -12,6 +12,7 @@ import components.sequence.Sequence1L;
  * @param <T>
  *            type of {@code Queue} entries
  * @correspondence this = $this.entries
+ * @author michael
  */
 public class Queue3<T> extends QueueSecondary<T> {
 
