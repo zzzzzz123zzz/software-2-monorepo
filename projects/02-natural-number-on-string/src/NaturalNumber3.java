@@ -33,7 +33,7 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      */
     private void createNewRep() {
 
-        this.rep = "";
+        this.rep = ")))";
 
     }
 
