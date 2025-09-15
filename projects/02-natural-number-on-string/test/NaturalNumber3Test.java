@@ -8,10 +8,6 @@ public class NaturalNumber3Test extends NaturalNumberTest {
     @Override
     protected final NaturalNumber constructorTest() {
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
     }
 
     @Override
