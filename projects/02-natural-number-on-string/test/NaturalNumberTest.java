@@ -111,28 +111,54 @@ public abstract class NaturalNumberTest {
     }
 
     @Test
-    public void testConstructorInt() {
-        final int zero = 0;
-        NaturalNumber testNat = this.constructorTest(zero);
-        NaturalNumber expNat = this.constructorRef(zero);
+    public void testConstructorIntNonZero() {
+        final int input = 123;
+        NaturalNumber testNat = this.constructorTest(input);
+        NaturalNumber expNat = this.constructorRef(input);
         assertEquals(expNat, testNat);
     }
 
     @Test
-    public void testConstructorString() {
-        final int zeroInt = 0;
-        String zero = Integer.toString(zeroInt);
-        NaturalNumber testNat = this.constructorTest(zero);
-        NaturalNumber expNat = this.constructorRef(zero);
+    public void testConstructorStringNonZero() {
+        String input = "456";
+        NaturalNumber testNat = this.constructorTest(input);
+        NaturalNumber expNat = this.constructorRef(input);
         assertEquals(expNat, testNat);
     }
 
     @Test
-    public void testConstructorNat() {
-        final int zero = 0;
-        NaturalNumber testNat = this.constructorTest(zero);
-        NaturalNumber expNat = this.constructorRef(zero);
+    public void testConstructorNatNonZero() {
+        NaturalNumber input = this.constructorRef(789);
+        NaturalNumber testNat = this.constructorTest(input);
+        NaturalNumber expNat = this.constructorRef(input);
         assertEquals(expNat, testNat);
+    }
+
+    @Test
+    public void testNewInstance() {
+        NaturalNumber n = this.constructorTest(123);
+        NaturalNumber newN = n.newInstance();
+        NaturalNumber expected = this.constructorRef();
+        assertEquals(expected, newN);
+    }
+
+    @Test
+    public void testClear() {
+        NaturalNumber n = this.constructorTest(456);
+        n.clear();
+        NaturalNumber expected = this.constructorRef();
+        assertEquals(expected, n);
+    }
+
+    @Test
+    public void testTransferFrom() {
+        NaturalNumber n = this.constructorTest();
+        NaturalNumber val = this.constructorTest(789);
+        n.transferFrom(val);
+        NaturalNumber expectedN = this.constructorRef(789);
+        NaturalNumber expectedSource = this.constructorRef();
+        assertEquals(expectedN, n);
+        assertEquals(expectedSource, val);
     }
 
     @Test
