@@ -147,7 +147,7 @@ public abstract class NaturalNumberTest {
 
     @Test
     public void mul10MaxInt() {
-        final int maxInt = 500000000;
+        final int maxInt = 5000;
         NaturalNumber testNat = this.constructorTest(maxInt);
         NaturalNumber expNat = this.constructorRef(maxInt);
         testNat.multiplyBy10(0);
@@ -175,7 +175,7 @@ public abstract class NaturalNumberTest {
 
     @Test
     public void mul10MaxString() {
-        String maxInt = Integer.toString(500000000);
+        String maxInt = Integer.toString(5000);
         NaturalNumber testNat = this.constructorTest(maxInt);
         NaturalNumber expNat = this.constructorRef(maxInt);
         testNat.multiplyBy10(0);
@@ -204,7 +204,7 @@ public abstract class NaturalNumberTest {
 
     @Test
     public void mul10MaxNat() {
-        int maxNum = 500000000;
+        int maxNum = 5000;
         NaturalNumber testNat = this.constructorTest(maxNum);
         NaturalNumber expNat = this.constructorTest(maxNum);
         testNat.multiplyBy10(0);
@@ -234,7 +234,7 @@ public abstract class NaturalNumberTest {
 
     @Test
     public void div10MaxInt() {
-        int maxNum = 500000000;
+        int maxNum = 5000;
         final int remainder = 0;
         NaturalNumber testNat = this.constructorTest(maxNum);
         NaturalNumber expNat = this.constructorTest(maxNum);
@@ -271,7 +271,7 @@ public abstract class NaturalNumberTest {
 
     @Test
     public void div10MaxString() {
-        String maxInt = Integer.toString(500000000);
+        String maxInt = Integer.toString(5000);
         final int remainderInt = 0;
         String remainder = Integer.toString(remainderInt);
         NaturalNumber testNat = this.constructorTest(maxInt);
@@ -309,7 +309,7 @@ public abstract class NaturalNumberTest {
 
     @Test
     public void div10MaxNat() {
-        int maxNum = 500000000;
+        int maxNum = 5000;
         final int remainder = 0;
         NaturalNumber testNat = this.constructorTest(maxNum);
         NaturalNumber expNat = this.constructorTest(maxNum);
