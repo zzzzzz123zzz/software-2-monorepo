@@ -42,3 +42,5 @@ projects/01-word-counter/*
 
 # A special case lab, which will not be ignored
 !labs/04-version-control
+/bin/
+.classpath
