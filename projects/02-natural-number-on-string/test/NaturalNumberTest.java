@@ -1,10 +1,8 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import components.naturalnumber.NaturalNumber;
-import components.naturalnumber.NaturalNumber2;
 
 /**
  * JUnit test fixture for {@code NaturalNumber}'s constructors and kernel
@@ -137,42 +135,48 @@ public abstract class NaturalNumberTest {
     }
 
     @Test
-    public void testMultiplyBy10Zero() {
-        NaturalNumber n = new NaturalNumber2(0);
-        n.multiplyBy10(0);
-        NaturalNumber expected = new NaturalNumber2(0);
-        assertTrue(expected.equals(n));
+    public void mul10Int() {
+        final int initialNum = 3;
+        final int finalNum = 30;
+        NaturalNumber testNat = this.constructorTest(initialNum);
+        NaturalNumber expNat = this.constructorTest(finalNum);
+        testNat.multiplyBy10(0);
+        assertEquals(expNat, testNat);
     }
 
     @Test
-    public void testMultiplyBy10Zero() {
-        NaturalNumber n = new NaturalNumber2(5);
-        n.multiplyBy10(0);
-        NaturalNumber expected = new NaturalNumber2(50);
-        assertTrue(expected.equals(n));
+    public void mul10Int2() {
+        final int initialNum = 3;
+        final int finalNum = 35;
+        NaturalNumber testNat = this.constructorTest(initialNum);
+        NaturalNumber expNat = this.constructorTest(finalNum);
+        testNat.multiplyBy10(5);
+        assertEquals(expNat, testNat);
     }
 
     @Test
-    public void testMultiplyBy10Zero() {
-        NaturalNumber n = new NaturalNumber2(515);
-        n.multiplyBy10(7);
-        NaturalNumber expected = new NaturalNumber2(515);
-        assertTrue(expected.equals(n));
+    public void mul10BigInt() {
+        final int maxInt = 5000;
+        NaturalNumber testNat = this.constructorTest(maxInt);
+        NaturalNumber expNat = this.constructorRef(maxInt);
+        testNat.multiplyBy10(0);
+        assertEquals(expNat, testNat);
     }
 
     @Test
-    public void testMultiplyBy10Zero() {
-        NaturalNumber n = new NaturalNumber2(0);
-        n.multiplyBy10(0);
-        NaturalNumber expected = new NaturalNumber2(0);
-        assertTrue(expected.equals(n));
+    public void mul10Zero() {
+        final int zero = 0;
+        NaturalNumber testNat = this.constructorTest(zero);
+        NaturalNumber expNat = this.constructorRef(zero);
+        testNat.multiplyBy10(0);
+        assertEquals(expNat, testNat);
     }
 
     @Test
-    public void div10Int() {
-        final int initialNum = 33;
-        final int finalNum = 3;
-        final int remainder = 3;
+    public void div10BigNum() {
+        final int initialNum = 567;
+        final int finalNum = 56;
+        final int remainder = 7;
         NaturalNumber testNat = this.constructorTest(initialNum);
         NaturalNumber expNat = this.constructorTest(finalNum);
         int testRem = testNat.divideBy10();
@@ -181,11 +185,12 @@ public abstract class NaturalNumberTest {
     }
 
     @Test
-    public void div10MaxInt() {
-        int maxNum = 5000;
-        final int remainder = 0;
-        NaturalNumber testNat = this.constructorTest(maxNum);
-        NaturalNumber expNat = this.constructorTest(maxNum);
+    public void div10SmalNum() {
+        int initialInt = 5;
+        int finalInt = 0;
+        final int remainder = 5;
+        NaturalNumber testNat = this.constructorTest(initialInt);
+        NaturalNumber expNat = this.constructorTest(finalInt);
         int testRem = testNat.divideBy10();
         assertEquals(expNat, testNat);
         assertEquals(remainder, testRem);
@@ -203,82 +208,7 @@ public abstract class NaturalNumberTest {
     }
 
     @Test
-    public void div10String() {
-        final int initialInt = 35;
-        final int finalInt = 3;
-        final int remainderInt = 5;
-        String initialNum = Integer.toString(initialInt);
-        String finalNum = Integer.toString(finalInt);
-        String remainder = Integer.toString(remainderInt);
-        NaturalNumber testNat = this.constructorTest(initialNum);
-        NaturalNumber expNat = this.constructorTest(finalNum);
-        String testRem = Integer.toString(testNat.divideBy10());
-        assertEquals(expNat, testNat);
-        assertEquals(remainder, testRem);
-    }
-
-    @Test
-    public void div10MaxString() {
-        String maxInt = Integer.toString(5000);
-        final int remainderInt = 0;
-        String remainder = Integer.toString(remainderInt);
-        NaturalNumber testNat = this.constructorTest(maxInt);
-        NaturalNumber expNat = this.constructorRef(maxInt);
-        String testRem = Integer.toString(testNat.divideBy10());
-        assertEquals(expNat, testNat);
-        assertEquals(remainder, testRem);
-    }
-
-    @Test
-    public void div10ZeroString() {
-        final int zero = 0;
-        final int remainderInt = 0;
-        String initialNum = Integer.toString(zero);
-        String finalNum = Integer.toString(zero);
-        String remainder = Integer.toString(remainderInt);
-        NaturalNumber testNat = this.constructorTest(initialNum);
-        NaturalNumber expNat = this.constructorTest(finalNum);
-        String testRem = Integer.toString(testNat.divideBy10());
-        assertEquals(expNat, testNat);
-        assertEquals(remainder, testRem);
-    }
-
-    @Test
-    public void div10Nat() {
-        final int initialNum = 27;
-        final int finalNum = 2;
-        final int remainder = 7;
-        NaturalNumber testNat = this.constructorTest(initialNum);
-        NaturalNumber expNat = this.constructorTest(finalNum);
-        int testRem = testNat.divideBy10();
-        assertEquals(expNat, testNat);
-        assertEquals(remainder, testRem);
-    }
-
-    @Test
-    public void div10MaxNat() {
-        int maxNum = 5000;
-        final int remainder = 0;
-        NaturalNumber testNat = this.constructorTest(maxNum);
-        NaturalNumber expNat = this.constructorTest(maxNum);
-        int testRem = testNat.divideBy10();
-        assertEquals(expNat, testNat);
-        assertEquals(remainder, testRem);
-    }
-
-    @Test
-    public void div10ZeroNat() {
-        final int zero = 0;
-        final int remainder = 0;
-        NaturalNumber testNat = this.constructorTest(zero);
-        NaturalNumber expNat = this.constructorTest(zero);
-        int testRem = testNat.divideBy10();
-        assertEquals(expNat, testNat);
-        assertEquals(remainder, testRem);
-    }
-
-    @Test
-    public void isZeroInt() {
+    public void isZeroTrue() {
         final int zero = 0;
         NaturalNumber testNat = this.constructorTest(zero);
         boolean testZero = testNat.isZero();
@@ -286,42 +216,8 @@ public abstract class NaturalNumberTest {
     }
 
     @Test
-    public void isNotZeroInt() {
+    public void isNotZeroFalse() {
         final int zero = 5;
-        NaturalNumber testNat = this.constructorTest(zero);
-        boolean testZero = testNat.isZero();
-        assertEquals(false, testZero);
-    }
-
-    @Test
-    public void isZeroString() {
-        final int zeroInt = 0;
-        String zero = Integer.toString(zeroInt);
-        NaturalNumber testNat = this.constructorTest(zero);
-        boolean testZero = testNat.isZero();
-        assertEquals(true, testZero);
-    }
-
-    @Test
-    public void isNotZeroString() {
-        final int zeroInt = 66;
-        String zero = Integer.toString(zeroInt);
-        NaturalNumber testNat = this.constructorTest(zero);
-        boolean testZero = testNat.isZero();
-        assertEquals(false, testZero);
-    }
-
-    @Test
-    public void isZeroNat() {
-        final int zero = 0;
-        NaturalNumber testNat = this.constructorTest(zero);
-        boolean testZero = testNat.isZero();
-        assertEquals(true, testZero);
-    }
-
-    @Test
-    public void isNotZeroNat() {
-        final int zero = 10;
         NaturalNumber testNat = this.constructorTest(zero);
         boolean testZero = testNat.isZero();
         assertEquals(false, testZero);
