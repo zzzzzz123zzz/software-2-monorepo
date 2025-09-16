@@ -8,7 +8,7 @@ import components.naturalnumber.NaturalNumber;
  * JUnit test fixture for {@code NaturalNumber}'s constructors and kernel
  * methods.
  *
- * @author Put your name here
+ * @author Jeng(Zizheng) Zhuang; Leo Zhuang; Michael Xu;
  *
  */
 public abstract class NaturalNumberTest {
@@ -103,6 +103,10 @@ public abstract class NaturalNumberTest {
 
     // TODO - add test cases for four constructors, multiplyBy10, divideBy10, isZero
 
+    /**
+     * Tests the default constructor of NaturalNumber. Ensures the value is
+     * initialized to 0.
+     */
     @Test
     public void testConstructor() {
         NaturalNumber testNat = this.constructorTest();
@@ -110,6 +114,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests the constructor with a non-zero int input. Ensures the value is
+     * initialized correctly.
+     */
     @Test
     public void testConstructorIntNonZero() {
         final int input = 123;
@@ -118,6 +126,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests the constructor with a non-zero String input. Ensures the value is
+     * initialized correctly.
+     */
     @Test
     public void testConstructorStringNonZero() {
         String input = "456";
@@ -126,6 +138,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests the copy constructor with a NaturalNumber input. Ensures the new
+     * object is equal to the original.
+     */
     @Test
     public void testConstructorNatNonZero() {
         NaturalNumber input = this.constructorRef(789);
@@ -134,6 +150,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests multiplyBy10 with zero appended. Ensures the number is correctly
+     * multiplied by 10.
+     */
     @Test
     public void mul10Int() {
         final int initialNum = 3;
@@ -144,6 +164,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests multiplyBy10 with a non-zero digit appended. Ensures the number is
+     * correctly multiplied by 10 and the digit added.
+     */
     @Test
     public void mul10Int2() {
         final int initialNum = 3;
@@ -154,6 +178,24 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests multiplyBy10 on zero with a non-zero digit appended. Ensures the
+     * number is correctly set to the digit.
+     */
+    @Test
+    public void mul10Int3() {
+        final int initialNum = 0;
+        final int finalNum = 5;
+        NaturalNumber testNat = this.constructorTest(initialNum);
+        NaturalNumber expNat = this.constructorTest(finalNum);
+        testNat.multiplyBy10(5);
+        assertEquals(expNat, testNat);
+    }
+
+    /**
+     * Tests multiplyBy10 on a large number with zero appended. Ensures the
+     * number remains unchanged.
+     */
     @Test
     public void mul10BigInt() {
         final int maxInt = 5000;
@@ -163,6 +205,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests multiplyBy10 on zero with zero appended. Ensures the number remains
+     * zero.
+     */
     @Test
     public void mul10Zero() {
         final int zero = 0;
@@ -172,6 +218,10 @@ public abstract class NaturalNumberTest {
         assertEquals(expNat, testNat);
     }
 
+    /**
+     * Tests divideBy10 on a large number. Ensures the number is correctly
+     * divided and the remainder is correct.
+     */
     @Test
     public void div10BigNum() {
         final int initialNum = 567;
@@ -184,6 +234,10 @@ public abstract class NaturalNumberTest {
         assertEquals(remainder, testRem);
     }
 
+    /**
+     * Tests divideBy10 on a small number. Ensures the number is correctly
+     * divided and the remainder is correct.
+     */
     @Test
     public void div10SmalNum() {
         int initialInt = 5;
@@ -196,6 +250,10 @@ public abstract class NaturalNumberTest {
         assertEquals(remainder, testRem);
     }
 
+    /**
+     * Tests divideBy10 on zero. Ensures the number remains zero and the
+     * remainder is zero.
+     */
     @Test
     public void div10ZeroInt() {
         final int zero = 0;
@@ -207,6 +265,9 @@ public abstract class NaturalNumberTest {
         assertEquals(remainder, testRem);
     }
 
+    /**
+     * Tests isZero on a zero number. Ensures the method returns true.
+     */
     @Test
     public void isZeroTrue() {
         final int zero = 0;
@@ -215,6 +276,9 @@ public abstract class NaturalNumberTest {
         assertEquals(true, testZero);
     }
 
+    /**
+     * Tests isZero on a non-zero number. Ensures the method returns false.
+     */
     @Test
     public void isNotZeroFalse() {
         final int zero = 5;
