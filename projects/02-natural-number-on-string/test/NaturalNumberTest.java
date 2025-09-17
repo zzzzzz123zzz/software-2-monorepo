@@ -144,7 +144,8 @@ public abstract class NaturalNumberTest {
      */
     @Test
     public void testConstructorNatNonZero() {
-        NaturalNumber input = this.constructorRef(789);
+        final int k = 789;
+        NaturalNumber input = this.constructorRef(k);
         NaturalNumber testNat = this.constructorTest(input);
         NaturalNumber expNat = this.constructorRef(input);
         assertEquals(expNat, testNat);
@@ -172,9 +173,10 @@ public abstract class NaturalNumberTest {
     public void mul10Int2() {
         final int initialNum = 3;
         final int finalNum = 35;
+        final int digit = 5;
         NaturalNumber testNat = this.constructorTest(initialNum);
         NaturalNumber expNat = this.constructorTest(finalNum);
-        testNat.multiplyBy10(5);
+        testNat.multiplyBy10(digit);
         assertEquals(expNat, testNat);
     }
 
@@ -186,9 +188,10 @@ public abstract class NaturalNumberTest {
     public void mul10Int3() {
         final int initialNum = 0;
         final int finalNum = 5;
+        final int digit = 5;
         NaturalNumber testNat = this.constructorTest(initialNum);
         NaturalNumber expNat = this.constructorTest(finalNum);
-        testNat.multiplyBy10(5);
+        testNat.multiplyBy10(digit);
         assertEquals(expNat, testNat);
     }
 
@@ -240,8 +243,8 @@ public abstract class NaturalNumberTest {
      */
     @Test
     public void div10SmalNum() {
-        int initialInt = 5;
-        int finalInt = 0;
+        final int initialInt = 5;
+        final int finalInt = 0;
         final int remainder = 5;
         NaturalNumber testNat = this.constructorTest(initialInt);
         NaturalNumber expNat = this.constructorTest(finalInt);
