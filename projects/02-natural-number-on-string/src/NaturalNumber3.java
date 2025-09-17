@@ -145,7 +145,7 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
         assert 0 <= k : "Violation of: 0 <= k";
         assert k < RADIX : "Violation of: k < 10";
         if (this.rep.equals("") && k == 0) {
-            // Stay at zero
+            this.rep = "";
         } else {
             this.rep += Integer.toString(k);
         }
