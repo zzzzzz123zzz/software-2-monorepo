@@ -202,8 +202,9 @@ public abstract class NaturalNumberTest {
     @Test
     public void mul10BigInt() {
         final int maxInt = 5000;
+        final int fInt = 50000;
         NaturalNumber testNat = this.constructorTest(maxInt);
-        NaturalNumber expNat = this.constructorRef(maxInt);
+        NaturalNumber expNat = this.constructorRef(fInt);
         testNat.multiplyBy10(0);
         assertEquals(expNat, testNat);
     }
