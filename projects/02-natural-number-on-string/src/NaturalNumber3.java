@@ -32,9 +32,7 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      * Creator of initial representation.
      */
     private void createNewRep() {
-
         this.rep = "";
-
     }
 
     /*
@@ -54,7 +52,8 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      * Constructor from {@code int}.
      *
      * @param i
-     *            {@code int} to initialize from
+     *            {@code int} to initialize from this create a natural number
+     *            and store it as a String.
      */
     public NaturalNumber3(int i) {
         assert i >= 0 : "Violation of: i >= 0";
@@ -70,7 +69,8 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      * Constructor from {@code String}.
      *
      * @param s
-     *            {@code String} to initialize from
+     *            {@code String} to initialize from this take a String and store
+     *            it as natrual number if the string only contain number.
      */
     public NaturalNumber3(String s) {
         assert s != null : "Violation of: s is not null";
@@ -88,7 +88,8 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      * Constructor from {@code NaturalNumber}.
      *
      * @param n
-     *            {@code NaturalNumber} to initialize from
+     *            {@code NaturalNumber} to initialize from this take an natural
+     *            number and store it as string.
      */
     public NaturalNumber3(NaturalNumber n) {
         assert n != null : "Violation of: n is not null";
@@ -135,6 +136,8 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
 
     /*
      * Kernel methods ---------------------------------------------------------
+     * this method times the number by 10 and add the int k to the last as the
+     * last number.
      */
 
     @Override
@@ -148,6 +151,9 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
         }
     }
 
+    /**
+     * this method divide the number by 10 and returns the remaning.
+     */
     @Override
     public final int divideBy10() {
         if (this.rep.equals("")) {
@@ -162,6 +168,9 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
         return lastDigit;
     }
 
+    /**
+     * this method check if it is zero or not and return true or false.
+     */
     @Override
     public final boolean isZero() {
         return this.rep.equals("");
