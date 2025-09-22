@@ -34,7 +34,7 @@ import components.map.MapSecondary;
  *          (pf)
  * </pre>
  *
- * @author Put your name here
+ * @author Michael Xu
  *
  */
 public class Map4<K, V> extends MapSecondary<K, V> {
@@ -74,11 +74,11 @@ public class Map4<K, V> extends MapSecondary<K, V> {
      */
     private static int mod(int a, int b) {
         assert b > 0 : "Violation of: b > 0";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return 0;
+        int ans = a % b;
+        if (ans < b) {
+            ans += b;
+        }
+        return ans;
     }
 
     /**
@@ -103,9 +103,10 @@ public class Map4<K, V> extends MapSecondary<K, V> {
          * conversion, though it cannot fail.
          */
         this.hashTable = new Map[hashTableSize];
-
-        // TODO - fill in rest of body
-
+        for (int i = 0; i < hashTableSize; i++) {
+            this.hashTable[i] = new components.map.Map1L<>();
+        }
+        this.size = 0;
     }
 
     /*
@@ -116,9 +117,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
      * No-argument constructor.
      */
     public Map4() {
-
-        // TODO - fill in body
-
+        this.createNewRep(DEFAULT_HASH_TABLE_SIZE);
     }
 
     /**
@@ -130,9 +129,8 @@ public class Map4<K, V> extends MapSecondary<K, V> {
      * @ensures this = {}
      */
     public Map4(int hashTableSize) {
-
-        // TODO - fill in body
-
+        assert hashTableSize > 0 : "Need to be bigger than 0";
+        this.createNewRep(hashTableSize);
     }
 
     /*
@@ -181,29 +179,31 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert value != null : "Violation of: value is not null";
         assert !this.hasKey(key) : "Violation of: key is not in DOMAIN(this)";
-
-        // TODO - fill in body
-
+        int index = mod(key.hashCode(), this.hashTable.length);
+        this.hashTable[index].add(key, value);
+        this.size++;
     }
 
     @Override
     public final Pair<K, V> remove(K key) {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+        int index = mod(key.hashCode(), this.hashTable.length);
+        Pair<K, V> removed = this.hashTable[index].remove(key);
+        this.size--;
+        return removed;
     }
 
     @Override
     public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
+        for (int i = 0; i < this.hashTable.length; i++) {
+            if (this.hashTable[i].size() > 0) {
+                Pair<K, V> removed = this.hashTable[i].removeAny();
+                this.size--;
+                return removed;
+            }
+        }
         return null;
     }
 
@@ -211,30 +211,20 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final V value(K key) {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+        int index = mod(key.hashCode(), this.hashTable.length);
+        return this.hashTable[index].value(key);
     }
 
     @Override
     public final boolean hasKey(K key) {
         assert key != null : "Violation of: key is not null";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return false;
+        int index = mod(key.hashCode(), this.hashTable.length);
+        return this.hashTable[index].hasKey(key);
     }
 
     @Override
     public final int size() {
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return 0;
+        return this.size;
     }
 
     @Override
