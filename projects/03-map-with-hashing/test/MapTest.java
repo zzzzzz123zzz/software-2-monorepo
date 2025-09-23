@@ -1,3 +1,5 @@
+import static org.junit.Assert.assertEquals;
+
 import components.map.Map;
 
 /**
@@ -79,5 +81,11 @@ public abstract class MapTest {
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,
     // hasKey, and size
+
+    public void testConstructor() {
+        Map<String, String> testMap = this.constructorTest();
+        Map<String, String> expMap = this.constructorRef();
+        assertEquals(expMap, testMap);
+    }
 
 }
