@@ -202,6 +202,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
             if (this.hashTable[i].size() > 0) {
                 this.size--;
                 removed = this.hashTable[i].removeAny();
+                break;
             }
         }
         return removed;
