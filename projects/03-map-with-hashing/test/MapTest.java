@@ -88,4 +88,37 @@ public abstract class MapTest {
         assertEquals(expMap, testMap);
     }
 
+    public void addTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two");
+        Map<String, String> expMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        testMap.add("Three", "Four");
+        assertEquals(expMap, testMap);
+    }
+
+    public void removeTest() {
+        Map<String, String> testMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        Map<String, String> expMap = this.createFromArgsTest("One", "Two");
+        testMap.remove("Three");
+        assertEquals(expMap, testMap);
+    }
+
+    public void removeAnyTest() {
+        Map<String, String> testMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        Map<String, String> expMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        String key = testMap.removeAny().key();
+        int length = expMap.size() - testMap.size();
+        boolean include = expMap.hasKey(key);
+
+        assertEquals(1, length);
+        assertEquals(true, include);
+    }
+
+    public void valueTest() {
+
+    }
+
 }
