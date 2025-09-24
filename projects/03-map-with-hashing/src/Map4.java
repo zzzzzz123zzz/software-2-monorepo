@@ -199,7 +199,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert this.size() > 0 : "Violation of: this /= empty_set";
         Pair<K, V> removed = null;
         for (int i = 0; i < this.hashTable.length
-                && !removed.equals(null); i++) {
+                && removed.equals(null); i++) {
             if (this.hashTable[i].size() > 0) {
                 this.size--;
                 removed = this.hashTable[i].removeAny();
