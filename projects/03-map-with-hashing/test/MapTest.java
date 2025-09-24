@@ -128,10 +128,11 @@ public abstract class MapTest {
                 "Three", "Four");
         Map<String, String> expMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
-        Map.Pair<String, String> testPair = testMap.removeAny();
-        Map.Pair<String, String> expPair = expMap.remove(testPair.key());
 
-        assertEquals(expPair, testPair);
+        Map.Pair<String, String> removed = testMap.removeAny();
+        assertEquals(expMap.value(removed.key()), removed.value());
+        expMap.remove(removed.key());
+
         assertEquals(expMap, testMap);
     }
 
