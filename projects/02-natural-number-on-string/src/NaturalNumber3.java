@@ -156,10 +156,11 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      */
     @Override
     public final int divideBy10() {
+        int lastDigit;
         if (this.rep.equals("")) {
-            return 0;
+            lastDigit = 0;
         }
-        int lastDigit = Character
+        lastDigit = Character
                 .getNumericValue(this.rep.charAt(this.rep.length() - 1));
         this.rep = this.rep.substring(0, this.rep.length() - 1);
         if (this.rep.equals("0")) {

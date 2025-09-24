@@ -197,14 +197,14 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     @Override
     public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
+        Pair<K, V> removed = null;
         for (int i = 0; i < this.hashTable.length; i++) {
             if (this.hashTable[i].size() > 0) {
-                Pair<K, V> removed = this.hashTable[i].removeAny();
                 this.size--;
-                return removed;
+                removed = this.hashTable[i].removeAny();
             }
         }
-        return null;
+        return removed;
     }
 
     @Override
