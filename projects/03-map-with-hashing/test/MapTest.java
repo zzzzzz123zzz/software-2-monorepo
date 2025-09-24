@@ -109,16 +109,41 @@ public abstract class MapTest {
                 "Three", "Four");
         Map<String, String> expMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
-        String key = testMap.removeAny().key();
         int length = expMap.size() - testMap.size();
-        boolean include = expMap.hasKey(key);
+        Map.Pair<String, String> testPair = testMap.removeAny();
+        Map.Pair<String, String> expPair = expMap.remove(testPair.key());
 
         assertEquals(1, length);
-        assertEquals(true, include);
+        assertEquals(expPair, testPair);
     }
 
     public void valueTest() {
+        Map<String, String> testMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        Map<String, String> expMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        String testValue = testMap.value("One");
+        String expValue = testMap.value("One");
+        assertEquals(expValue, testValue);
+    }
 
+    public void hasKeyTest() {
+        Map<String, String> testMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        Map<String, String> expMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        String testKey = testMap.remove("One").key();
+        boolean found = expMap.hasKey(testKey);
+        assertEquals(true, found);
+    }
+
+    public void sizeTest() {
+        Map<String, String> testMap = this.constructorTest();
+        testMap.add("One", "Two");
+        testMap.add("Three", "Four");
+        testMap.add("Five", "Six");
+        final int expSize = 3;
+        assertEquals(expSize, testMap.size());
     }
 
 }
