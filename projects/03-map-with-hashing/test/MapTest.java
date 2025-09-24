@@ -1,5 +1,7 @@
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
 import components.map.Map;
 
 /**
@@ -82,12 +84,20 @@ public abstract class MapTest {
     // TODO - add test cases for constructor, add, remove, removeAny, value,
     // hasKey, and size
 
+    /**
+     * Tests that the constructor creates an empty map.
+     */
+    @Test
     public void testConstructor() {
         Map<String, String> testMap = this.constructorTest();
         Map<String, String> expMap = this.constructorRef();
         assertEquals(expMap, testMap);
     }
 
+    /**
+     * Tests that adding a new key-value pair updates the map correctly.
+     */
+    @Test
     public void addTest() {
         Map<String, String> testMap = this.createFromArgsTest("One", "Two");
         Map<String, String> expMap = this.createFromArgsRef("One", "Two",
@@ -96,6 +106,10 @@ public abstract class MapTest {
         assertEquals(expMap, testMap);
     }
 
+    /**
+     * Tests that removing a specific key-value pair updates the map correctly.
+     */
+    @Test
     public void removeTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
@@ -104,6 +118,11 @@ public abstract class MapTest {
         assertEquals(expMap, testMap);
     }
 
+    /**
+     * Tests that removeAny removes and returns some key-value pair, and the
+     * returned pair is actually from the map.
+     */
+    @Test
     public void removeAnyTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
@@ -117,16 +136,24 @@ public abstract class MapTest {
         assertEquals(expPair, testPair);
     }
 
+    /**
+     * Tests that value(k) returns the correct value for a given key.
+     */
+    @Test
     public void valueTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
         Map<String, String> expMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
         String testValue = testMap.value("One");
-        String expValue = testMap.value("One");
+        String expValue = expMap.value("One");
         assertEquals(expValue, testValue);
     }
 
+    /**
+     * Tests that hasKey returns true when the key is in the map.
+     */
+    @Test
     public void hasKeyTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
@@ -137,6 +164,10 @@ public abstract class MapTest {
         assertEquals(true, found);
     }
 
+    /**
+     * Tests that size() returns the correct number of key-value pairs.
+     */
+    @Test
     public void sizeTest() {
         Map<String, String> testMap = this.constructorTest();
         testMap.add("One", "Two");
