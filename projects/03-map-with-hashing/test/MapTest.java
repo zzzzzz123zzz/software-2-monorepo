@@ -95,10 +95,23 @@ public abstract class MapTest {
     }
 
     /**
+     * Tests that adding a new key-value pair to an empty map updates the map
+     * correctly.
+     */
+    @Test
+    public void addToEmptyTest() {
+        Map<String, String> testMap = this.constructorTest();
+        Map<String, String> expMap = this.constructorRef();
+        expMap.add("One", "Two");
+        testMap.add("One", "Two");
+        assertEquals(expMap, testMap);
+    }
+
+    /**
      * Tests that adding a new key-value pair updates the map correctly.
      */
     @Test
-    public void addTest() {
+    public void addToNonEmptyTest() {
         Map<String, String> testMap = this.createFromArgsTest("One", "Two");
         Map<String, String> expMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
@@ -110,11 +123,36 @@ public abstract class MapTest {
      * Tests that removing a specific key-value pair updates the map correctly.
      */
     @Test
-    public void removeTest() {
+    public void removeSimpleTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
         Map<String, String> expMap = this.createFromArgsTest("One", "Two");
         testMap.remove("Three");
+        assertEquals(expMap, testMap);
+    }
+
+    /**
+     * Tests that removing the only key-value pair from a map results in an
+     * empty map.
+     */
+    @Test
+    public void removeOnlyElementTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two");
+        Map<String, String> expMap = this.constructorRef();
+        testMap.remove("One");
+        assertEquals(expMap, testMap);
+    }
+
+    /**
+     * Tests that removing the first key-value pair from a map updates the map
+     * correctly.
+     */
+    @Test
+    public void removeFirstElementTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two",
+                "Three", "Four");
+        Map<String, String> expMap = this.createFromArgsRef("Three", "Four");
+        testMap.remove("One");
         assertEquals(expMap, testMap);
     }
 
@@ -137,44 +175,109 @@ public abstract class MapTest {
     }
 
     /**
-     * Tests that value(k) returns the correct value for a given key.
+     * Tests that removeAny removes and returns the only key-value pair from a
+     * single-element map, resulting in an empty map.
      */
     @Test
-    public void valueTest() {
-        Map<String, String> testMap = this.createFromArgsRef("One", "Two",
+    public void removeAnySingleElementTest() {
+        Map<String, String> testMap = this.createFromArgsRef("One", "Two");
+        Map<String, String> expMap = this.createFromArgsRef("One", "Two");
+
+        Map.Pair<String, String> removed = testMap.removeAny();
+        assertEquals(expMap.value(removed.key()), removed.value());
+        expMap.remove(removed.key());
+
+        assertEquals(expMap, testMap);
+    }
+
+    /**
+     * Tests that value returns the correct value when given a normal key in the
+     * map.
+     */
+    @Test
+    public void valueNormalKeyTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two",
+                "Three", "Four", "Five", "Six");
+        String val = testMap.value("Three");
+        assertEquals("Four", val);
+    }
+
+    /**
+     * Tests that value returns the correct value when given the first key in
+     * the map.
+     */
+    @Test
+    public void valueFirstKeyTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two",
                 "Three", "Four");
-        Map<String, String> expMap = this.createFromArgsRef("One", "Two",
+        String val = testMap.value("One");
+        assertEquals("Two", val);
+    }
+
+    /**
+     * Tests that value returns the correct value when given the last key in the
+     * map.
+     */
+    @Test
+    public void valueLastKeyTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two",
                 "Three", "Four");
-        String testValue = testMap.value("One");
-        String expValue = expMap.value("One");
-        assertEquals(expValue, testValue);
+        String val = testMap.value("Three");
+        assertEquals("Four", val);
+    }
+
+    /**
+     * Tests that value returns the correct value when given the only key in the
+     * map.
+     */
+    @Test
+    public void valueSingleElementTest() {
+        Map<String, String> testMap = this.createFromArgsTest("A", "B");
+        String val = testMap.value("A");
+        assertEquals("B", val);
     }
 
     /**
      * Tests that hasKey returns true when the key is in the map.
      */
     @Test
-    public void hasKeyTest() {
+    public void hasKeyTrueTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
-        Map<String, String> expMap = this.createFromArgsRef("One", "Two",
-                "Three", "Four");
-        String testKey = testMap.remove("One").key();
-        boolean found = expMap.hasKey(testKey);
+        boolean found = testMap.hasKey("one");
         assertEquals(true, found);
+    }
+
+    /**
+     * Tests that hasKey returns false when the key is not in the map.
+     */
+    @Test
+    public void hasKeyFalseTest() {
+        Map<String, String> testMap = this.createFromArgsRef("One", "Two",
+                "Three", "Four");
+        boolean found = testMap.hasKey("Five");
+        assertEquals(false, found);
+    }
+
+    /**
+     * Tests that size() returns 0 for an empty map.
+     */
+    @Test
+    public void sizeEmptyTest() {
+        Map<String, String> testMap = this.constructorTest();
+        int size = testMap.size();
+        assertEquals(0, size);
     }
 
     /**
      * Tests that size() returns the correct number of key-value pairs.
      */
     @Test
-    public void sizeTest() {
-        Map<String, String> testMap = this.constructorTest();
-        testMap.add("One", "Two");
-        testMap.add("Three", "Four");
-        testMap.add("Five", "Six");
-        final int expSize = 3;
-        assertEquals(expSize, testMap.size());
+    public void sizeNonEmptyTest() {
+        Map<String, String> testMap = this.createFromArgsTest("One", "Two",
+                "Three", "Four", "Five", "Six");
+        int size = testMap.size();
+        assertEquals(3, size);
     }
 
 }
