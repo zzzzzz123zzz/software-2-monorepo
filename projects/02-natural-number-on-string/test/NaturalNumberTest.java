@@ -115,6 +115,17 @@ public abstract class NaturalNumberTest {
     }
 
     /**
+     * Tests the constructor with an int input of zero. Ensures the value is
+     * initialized to 0.
+     */
+    @Test
+    public void testConstructorIntZero() {
+        NaturalNumber testNat = this.constructorTest(0);
+        NaturalNumber expNat = this.constructorRef(0);
+        assertEquals(expNat, testNat);
+    }
+
+    /**
      * Tests the constructor with a non-zero int input. Ensures the value is
      * initialized correctly.
      */
@@ -127,6 +138,17 @@ public abstract class NaturalNumberTest {
     }
 
     /**
+     * Tests the constructor with a String input of "0". Ensures the value is
+     * initialized to 0.
+     */
+    @Test
+    public void testConstructorStringZero() {
+        NaturalNumber testNat = this.constructorTest("0");
+        NaturalNumber expNat = this.constructorRef("0");
+        assertEquals(expNat, testNat);
+    }
+
+    /**
      * Tests the constructor with a non-zero String input. Ensures the value is
      * initialized correctly.
      */
@@ -135,6 +157,18 @@ public abstract class NaturalNumberTest {
         String input = "456";
         NaturalNumber testNat = this.constructorTest(input);
         NaturalNumber expNat = this.constructorRef(input);
+        assertEquals(expNat, testNat);
+    }
+
+    /**
+     * Tests the copy constructor with a NaturalNumber input of zero. Ensures
+     * the new object is equal to the original.
+     */
+    @Test
+    public void testConstructorNatZero() {
+        NaturalNumber zeroNN = this.constructorRef(0);
+        NaturalNumber testNat = this.constructorTest(zeroNN);
+        NaturalNumber expNat = this.constructorRef(zeroNN);
         assertEquals(expNat, testNat);
     }
 
