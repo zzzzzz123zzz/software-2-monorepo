@@ -52,28 +52,22 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
             T x) {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
-
-        boolean isFound = false;
-        BinaryTree<T> leftT = t.newInstance();
-        BinaryTree<T> rightT = t.newInstance();
-        T root = t.disassemble(leftT, rightT);
-        if (root.equals(x)) {
-            isFound = true;
-        } else {
-            boolean leftFound = false;
-            boolean rightFound = false;
-            if (leftT.height() > 0) {
-                leftFound = isInTree(leftT, x);
+        boolean found = false;
+        if (t.height() > 0) {
+            BinaryTree<T> leftT = t.newInstance();
+            BinaryTree<T> rightT = t.newInstance();
+            T root = t.disassemble(leftT, rightT);
+            int compare = x.compareTo(root);
+            if (compare == 0) {
+                found = true;
+            } else if (compare < 0) {
+                found = isInTree(leftT, x);
+            } else {
+                found = isInTree(rightT, x);
             }
-            if (rightT.height() > 0) {
-                rightFound = isInTree(rightT, x);
-            }
-            if (leftFound || rightFound) {
-                isFound = true;
-            }
+            t.assemble(root, leftT, rightT);
         }
-        t.assemble(root, leftT, rightT);
-        return isFound;
+        return found;
     }
 
     /**
@@ -94,19 +88,18 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
             T x) {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
-
-        BinaryTree<T> leftT = t.newInstance();
-        BinaryTree<T> rightT = t.newInstance();
         if (t.height() == 0) {
-            T root = t.disassemble(leftT, rightT);
-            root = x;
-            t.assemble(root, leftT, rightT);
+            BinaryTree<T> leftT = t.newInstance();
+            BinaryTree<T> rightT = t.newInstance();
+            t.assemble(x, leftT, rightT);
         } else {
+            BinaryTree<T> leftT = t.newInstance();
+            BinaryTree<T> rightT = t.newInstance();
             T root = t.disassemble(leftT, rightT);
-            if (root.compareTo(x) > 0) {
-                insertInTree(rightT, x);
-            } else {
+            if (x.compareTo(root) < 0) {
                 insertInTree(leftT, x);
+            } else {
+                insertInTree(rightT, x);
             }
             t.assemble(root, leftT, rightT);
         }
