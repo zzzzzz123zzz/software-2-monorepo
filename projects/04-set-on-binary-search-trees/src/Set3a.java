@@ -68,7 +68,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
             if (rightT.height() > 0) {
                 rightFound = isInTree(rightT, x);
             }
-            if (leftFond || rightFound) {
+            if (leftFound || rightFound) {
                 isFound = true;
             }
         }
