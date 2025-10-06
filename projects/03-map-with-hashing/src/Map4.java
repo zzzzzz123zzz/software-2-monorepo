@@ -75,7 +75,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     private static int mod(int a, int b) {
         assert b > 0 : "Violation of: b > 0";
         int ans = a % b;
-        if (ans < b) {
+        if (ans < 0) {
             ans += b;
         }
         return ans;
