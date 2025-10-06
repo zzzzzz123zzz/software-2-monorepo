@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import components.set.Set;
 
 /**
@@ -67,5 +71,68 @@ public abstract class SetTest {
     }
 
     // TODO - add test cases for constructor, add, remove, removeAny, contains, and size
+    /**
+     * Test the no-argument constructor.
+     */
+    @Test
+    public void testConstructor() {
+        Set<String> sTest = this.constructorTest();
+        Set<String> sExpected = this.constructorRef();
+        assertEquals(sExpected, sTest);
+    }
 
+    /**
+     * Test add to empty set.
+     */
+    @Test
+    public void testAddToEmpty() {
+        Set<String> sTest = this.createFromArgsTest();
+        Set<String> sExpected = this.createFromArgsRef("apple");
+
+        sTest.add("apple");
+
+        assertEquals(sExpected, sTest);
+    }
+
+    /**
+     * Test add to non-empty set.
+     */
+    @Test
+    public void testAddNonEmpty() {
+        Set<String> sTest = this.createFromArgsTest("apple");
+        Set<String> sExpected = this.createFromArgsRef("apple", "banana");
+
+        sTest.add("banana");
+
+        assertEquals(sExpected, sTest);
+    }
+
+    /**
+     * Test remove from one-element set.
+     */
+    @Test
+    public void testRemoveSingleElement() {
+        Set<String> sTest = this.createFromArgsTest("apple");
+        Set<String> sExpected = this.createFromArgsRef();
+
+        String removed = sTest.remove("apple");
+
+        assertEquals("apple", removed);
+        assertEquals(sExpected, sTest);
+    }
+
+    /**
+     * Test remove from multi-element set.
+     */
+    @Test
+    public void testRemoveFromMultiple() {
+        Set<String> sTest = this.createFromArgsTest("apple", "banana",
+                "cherry");
+        Set<String> sExpected = this.createFromArgsRef("apple", "cherry");
+
+        String removed = sTest.remove("banana");
+
+        assertEquals("banana", removed);
+        assertEquals(sExpected, sTest);
+    }
 }
