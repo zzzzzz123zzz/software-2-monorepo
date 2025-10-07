@@ -124,6 +124,18 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert t != null : "Violation of: t is not null";
         assert t.size() > 0 : "Violation of: |t| > 0";
 
+        T smallest = null;
+        BinaryTree<T> leftT = t.newInstance();
+        BinaryTree<T> rightT = t.newInstance();
+        T root = t.disassemble(leftT, rightT);
+        if (leftT.height() > 0) {
+            smallest = removeSmallest(leftT);
+        } else {
+            smallest = t.root();
+            t.clear();
+        }
+        t.assemble(root, leftT, rightT);
+        return smallest;
     }
 
     /**
