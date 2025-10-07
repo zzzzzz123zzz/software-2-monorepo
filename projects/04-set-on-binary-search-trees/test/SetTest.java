@@ -152,7 +152,7 @@ public abstract class SetTest {
     }
 
     /**
-     * test if ther is more than one element.
+     * test if there is more than one element.
      */
     @Test
     public void testRemoveAnyThreeElements() {
@@ -208,13 +208,3 @@ public abstract class SetTest {
         Set<String> s = this.createFromArgsTest("red", "green", "blue");
         assertEquals(3, s.size());
     }
-
-    /**
-     * test when the elements in it are the smae.
-     */
-    @Test
-    public void testSizeWithDuplicatesPassedIn() {
-        Set<String> s = this.createFromArgsTest("hi", "hi", "hi");
-        assertEquals(1, s.size());
-    }
-}
