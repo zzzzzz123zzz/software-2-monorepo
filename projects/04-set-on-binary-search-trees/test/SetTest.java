@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -134,5 +136,83 @@ public abstract class SetTest {
 
         assertEquals("banana", removed);
         assertEquals(sExpected, sTest);
+    }
+
+    /**
+     * test if there is only one element.
+     */
+    @Test
+    public void testRemoveAnyOneElement() {
+        Set<String> s = createFromArgsTest("a");
+        String removed = s.removeAny();
+        assertEquals("a", removed);
+        assertEquals(0, s.size());
+    }
+
+    /**
+     * test if ther is more than one element.
+     */
+    @Test
+    public void testRemoveAnyThreeElements() {
+        Set<String> s = createFromArgsTest("x", "y", "z");
+        String removed = s.removeAny();
+        assertTrue(removed.equals("x") || removed.equals("y")
+                || removed.equals("z"));
+        assertEquals(2, s.size());
+        assertFalse(s.contains(removed));
+    }
+
+    /**
+     * test when it contains.
+     */
+    @Test
+    public void testContainsTrue() {
+        Set<String> s = createFromArgsTest("cat", "dog", "fish");
+        assertTrue(s.contains("dog"));
+    }
+
+    /**
+     * test if it does not contains.
+     */
+    @Test
+    public void testContainsFalse() {
+        Set<String> s = createFromArgsTest("apple", "banana", "grape");
+        assertFalse(s.contains("orange"));
+    }
+
+    /**
+     * test if it is empty at all.
+     */
+    @Test
+    public void testContainsOnEmptySet() {
+        Set<String> s = createFromArgsTest();
+        assertFalse(s.contains("anything"));
+    }
+
+    /**
+     * test for size when it is empty.
+     */
+    @Test
+    public void testSizeEmpty() {
+        Set<String> s = createFromArgsTest();
+        assertEquals(0, s.size());
+    }
+
+    /**
+     * test when there are elements in it.
+     */
+    @Test
+    public void testSizeThreeElements() {
+        Set<String> s = createFromArgsTest("red", "green", "blue");
+        assertEquals(3, s.size());
+    }
+
+    /**
+     * test when the elements in it are the smae.
+     */
+    @Test
+    public void testSizeWithDuplicatesPassedIn() {
+        Set<String> s = createFromArgsTest("hi", "hi", "hi");
+        assertEquals(1, s.size());
     }
 }
