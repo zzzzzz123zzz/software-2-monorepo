@@ -130,11 +130,11 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         T root = t.disassemble(leftT, rightT);
         if (leftT.height() > 0) {
             smallest = removeSmallest(leftT);
+            t.assemble(root, leftT, rightT);
         } else {
-            smallest = t.root();
-            t.clear();
+            smallest = root;
+            t.transferFrom(rightT);
         }
-        t.assemble(root, leftT, rightT);
         return smallest;
     }
 
