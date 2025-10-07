@@ -9,7 +9,7 @@ import components.set.Set;
 /**
  * JUnit test fixture for {@code Set<String>}'s constructor and kernel methods.
  *
- * @author Put your name here
+ * @author Leo Zhuang, Jeng Zhuang， Michael Xu
  *
  */
 public abstract class SetTest {
@@ -143,23 +143,25 @@ public abstract class SetTest {
      */
     @Test
     public void testRemoveAnyOneElement() {
-        Set<String> s = createFromArgsTest("a");
-        String removed = s.removeAny();
-        assertEquals("a", removed);
-        assertEquals(0, s.size());
+        Set<String> sTest = this.createFromArgsTest("a");
+        Set<String> sExpected = this.createFromArgsRef("a");
+        String removed = sTest.removeAny();
+        assertTrue(sExpected.contains(removed));
+        sExpected.remove(removed);
+        assertEquals(sExpected, sTest);
     }
 
     /**
-     * test if ther is more than one element.
+     * test if there is more than one element.
      */
     @Test
     public void testRemoveAnyThreeElements() {
-        Set<String> s = createFromArgsTest("x", "y", "z");
-        String removed = s.removeAny();
-        assertTrue(removed.equals("x") || removed.equals("y")
-                || removed.equals("z"));
-        assertEquals(2, s.size());
-        assertFalse(s.contains(removed));
+        Set<String> sTest = this.createFromArgsTest("x", "y", "z");
+        Set<String> sExpected = this.createFromArgsRef("x", "y", "z");
+        String removed = sTest.removeAny();
+        assertTrue(sExpected.contains(removed));
+        sExpected.remove(removed);
+        assertEquals(sExpected, sTest);
     }
 
     /**
@@ -167,7 +169,7 @@ public abstract class SetTest {
      */
     @Test
     public void testContainsTrue() {
-        Set<String> s = createFromArgsTest("cat", "dog", "fish");
+        Set<String> s = this.createFromArgsTest("cat", "dog", "fish");
         assertTrue(s.contains("dog"));
     }
 
@@ -176,7 +178,7 @@ public abstract class SetTest {
      */
     @Test
     public void testContainsFalse() {
-        Set<String> s = createFromArgsTest("apple", "banana", "grape");
+        Set<String> s = this.createFromArgsTest("apple", "banana", "grape");
         assertFalse(s.contains("orange"));
     }
 
@@ -185,7 +187,7 @@ public abstract class SetTest {
      */
     @Test
     public void testContainsOnEmptySet() {
-        Set<String> s = createFromArgsTest();
+        Set<String> s = this.createFromArgsTest();
         assertFalse(s.contains("anything"));
     }
 
@@ -194,7 +196,7 @@ public abstract class SetTest {
      */
     @Test
     public void testSizeEmpty() {
-        Set<String> s = createFromArgsTest();
+        Set<String> s = this.createFromArgsTest();
         assertEquals(0, s.size());
     }
 
@@ -203,16 +205,6 @@ public abstract class SetTest {
      */
     @Test
     public void testSizeThreeElements() {
-        Set<String> s = createFromArgsTest("red", "green", "blue");
+        Set<String> s = this.createFromArgsTest("red", "green", "blue");
         assertEquals(3, s.size());
     }
-
-    /**
-     * test when the elements in it are the smae.
-     */
-    @Test
-    public void testSizeWithDuplicatesPassedIn() {
-        Set<String> s = createFromArgsTest("hi", "hi", "hi");
-        assertEquals(1, s.size());
-    }
-}

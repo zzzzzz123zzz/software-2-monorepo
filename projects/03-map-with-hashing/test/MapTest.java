@@ -244,7 +244,7 @@ public abstract class MapTest {
     public void hasKeyTrueTest() {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
-        boolean found = testMap.hasKey("one");
+        boolean found = testMap.hasKey("One");
         assertEquals(true, found);
     }
 
@@ -256,6 +256,16 @@ public abstract class MapTest {
         Map<String, String> testMap = this.createFromArgsRef("One", "Two",
                 "Three", "Four");
         boolean found = testMap.hasKey("Five");
+        assertEquals(false, found);
+    }
+
+    /**
+     * Tests that hasKey returns false when called on an empty map.
+     */
+    @Test
+    public void hasKeyEmptyTest() {
+        Map<String, String> testMap = this.constructorTest();
+        boolean found = testMap.hasKey("Anything");
         assertEquals(false, found);
     }
 
