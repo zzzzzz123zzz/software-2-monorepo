@@ -104,7 +104,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
          */
         this.hashTable = new Map[hashTableSize];
         for (int i = 0; i < hashTableSize; i++) {
-            this.hashTable[i] = new components.map.Map1L<>();
+            this.hashTable[i] = new components.map.Map1L<K, V>();
         }
         this.size = 0;
     }
