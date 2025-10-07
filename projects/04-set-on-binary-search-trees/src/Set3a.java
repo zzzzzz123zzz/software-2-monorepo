@@ -133,6 +133,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         } else {
             smallest = t.root();
             t.clear();
+            t.clear();
         }
         t.assemble(root, leftT, rightT);
         return smallest;
