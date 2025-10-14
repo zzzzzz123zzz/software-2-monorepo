@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import components.queue.Queue;
+import components.queue.Queue1L;
 import components.sortingmachine.SortingMachine;
 import components.sortingmachine.SortingMachineSecondary;
 
@@ -115,7 +116,9 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         assert 0 <= j : "Violation of: 0 <= j";
         assert j < array.length : "Violation of: j < |array|";
 
-        // TODO - fill in body
+        T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
 
     }
 
@@ -178,8 +181,19 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
          * representation for a complete binary tree.
          */
 
-        // TODO - fill in body
-        // *** you must use the recursive algorithm discussed in class ***
+        int a = 2 * top + 1;
+        int b = 2 * top + 2;
+        int smallest = top;
+        if (a <= last && order.compare(array[a], array[smallest]) < 0) {
+            smallest = a;
+        }
+        if (b <= last && order.compare(array[b], array[smallest]) < 0) {
+            smallest = b;
+        }
+        if (smallest != top) {
+            exchangeEntries(array, top, smallest);
+            siftDown(array, smallest, last, order); // recursion!
+        }
 
     }
 
@@ -222,9 +236,15 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
          * requires clause, because it must be true when using the array
          * representation for a complete binary tree.
          */
-
-        // TODO - fill in body
-        // *** you must use the recursive algorithm discussed in class ***
+        int left = 2 * top + 1;
+        int right = 2 * top + 2;
+        if (left < array.length) {
+            heapify(array, left, order);
+        }
+        if (right < array.length) {
+            heapify(array, right, order);
+        }
+        siftDown(array, top, array.length - 1, order);
 
     }
 
@@ -262,9 +282,10 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
          * cannot fail.
          */
         T[] heap = (T[]) (new Object[q.length()]);
-
-        // TODO - fill in rest of body
-
+        for (int i = 0; i < heap.length; i++) {
+            heap[i] = q.dequeue();
+        }
+        heapify(heap, 0, order);
         return heap;
     }
 
@@ -383,9 +404,11 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
      * </pre>
      */
     private void createNewRep(Comparator<T> order) {
-
-        // TODO - fill in body
-
+        this.machineOrder = order;
+        this.insertionMode = true;
+        this.entries = new Queue1L<T>();
+        this.heap = (T[]) new Object[100000];
+        this.heapSize = 0;
     }
 
     /*
@@ -456,17 +479,16 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
     public final void add(T x) {
         assert x != null : "Violation of: x is not null";
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
-
-        // TODO - fill in body
-
+        this.entries.enqueue(x);
         assert this.conventionHolds();
     }
 
     @Override
     public final void changeToExtractionMode() {
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
-
-        // TODO - fill in body
+        this.heap = buildHeap(this.entries, this.machineOrder);
+        this.heapSize = this.heap.length;
+        this.insertionMode = false;
 
         assert this.conventionHolds();
     }
@@ -476,12 +498,12 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         assert !this
                 .isInInsertionMode() : "Violation of: not this.insertion_mode";
         assert this.size() > 0 : "Violation of: this.contents /= {}";
-
-        // TODO - fill in body
-
+        T result = this.heap[0];
+        this.heapSize--;
+        exchangeEntries(this.heap, 0, this.heapSize);
+        siftDown(this.heap, 0, this.heapSize - 1, this.machineOrder);
         assert this.conventionHolds();
-        // Fix this line to return the result after checking the convention.
-        return null;
+        return result;
     }
 
     @Override
@@ -498,12 +520,9 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
 
     @Override
     public final int size() {
-
-        // TODO - fill in body
-
         assert this.conventionHolds();
-        // Fix this line to return the result after checking the convention.
-        return 0;
+        int size = this.insertionMode ? this.entries.length() : this.heapSize;
+        return size;
     }
 
     @Override
