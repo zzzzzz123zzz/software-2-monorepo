@@ -140,4 +140,43 @@ public abstract class SortingMachineTest {
     // TODO - add test cases for add, changeToExtractionMode, removeFirst,
     // isInInsertionMode, order, and size
 
+    @Test
+    public void noSortAddTest() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+        m.add("green");
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public void withSortAddTest() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "orange", "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "purple", "blue", "green", "orange");
+        m.add("purple");
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public void extractionModeTest() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "purple", "blue", "green", "orange");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "blue", "green", "oragnge", "purple", "red");
+        m.changeToExtractionMode();
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public void removeFirstTest(){
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red", "purple"
+                , "blue", "green", "orange");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "purple", "orange", "blue", "green");
+        m.removeFirst();
+        assertEquals(mExpected, m);
+
 }
