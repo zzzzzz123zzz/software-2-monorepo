@@ -121,7 +121,7 @@ public abstract class SortingMachineTest {
      * Sample test cases.
      */
 
-    /*
+    /**
      * Test the constructor of {@code SortingMachine}.
      */
     @Test
@@ -131,7 +131,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code add} when the machine is empty.
      */
     @Test
@@ -146,7 +146,7 @@ public abstract class SortingMachineTest {
     // TODO - add test cases for add, changeToExtractionMode, removeFirst,
     // isInInsertionMode, order, and size
 
-    /*
+    /**
      * Test {@code add} when the machine is non-empty.
      */
     @Test
@@ -159,7 +159,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code add} with multiple existing elements.
      */
     @Test
@@ -172,7 +172,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code add} with duplicate elements.
      */
     @Test
@@ -185,7 +185,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code changeToExtractionMode} when the machine is empty.
      */
     @Test
@@ -196,7 +196,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code changeToExtractionMode} when the machine has one element.
      */
     @Test
@@ -209,7 +209,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code changeToExtractionMode} when the machine has multiple
      * elements.
      */
@@ -223,7 +223,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code removeFirst} when the machine has multiple elements.
      */
     @Test
@@ -237,7 +237,7 @@ public abstract class SortingMachineTest {
 
     }
 
-    /*
+    /**
      * Test {@code removeFirst} when the machine has one element.
      */
     @Test
@@ -249,7 +249,7 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
-    /*
+    /**
      * Test {@code isInInsertionMode} when the machine is in insertion mode.
      */
     @Test
@@ -258,7 +258,7 @@ public abstract class SortingMachineTest {
         assertEquals(true, m.isInInsertionMode());
     }
 
-    /*
+    /**
      * Test {@code isInInsertionMode} when the machine is in extraction mode.
      */
     @Test
@@ -268,7 +268,7 @@ public abstract class SortingMachineTest {
         assertEquals(false, m.isInInsertionMode());
     }
 
-    /*
+    /**
      * Test {@code order} in insertion mode.
      */
     @Test
@@ -277,7 +277,7 @@ public abstract class SortingMachineTest {
         assertEquals(ORDER, m.order());
     }
 
-    /*
+    /**
      * Test {@code order} in extraction mode.
      */
     @Test
@@ -287,7 +287,7 @@ public abstract class SortingMachineTest {
         assertEquals(ORDER, m.order());
     }
 
-    /*
+    /**
      * Test {@code size} in insertion mode with elements.
      */
     @Test
@@ -297,7 +297,7 @@ public abstract class SortingMachineTest {
         assertEquals(3, m.size());
     }
 
-    /*
+    /**
      * Test {@code size} in insertion mode when empty.
      */
     @Test
@@ -306,7 +306,7 @@ public abstract class SortingMachineTest {
         assertEquals(0, m.size());
     }
 
-    /*
+    /**
      * Test {@code size} in extraction mode with elements.
      */
     @Test
@@ -316,7 +316,7 @@ public abstract class SortingMachineTest {
         assertEquals(4, m.size());
     }
 
-    /*
+    /**
      * Test {@code size} in extraction mode when empty.
      */
     @Test
