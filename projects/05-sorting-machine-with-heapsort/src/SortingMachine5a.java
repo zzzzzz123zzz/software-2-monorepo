@@ -60,7 +60,7 @@ import components.sortingmachine.SortingMachineSecondary;
  *   this = (false, $this.machineOrder, multiset_entries($this.heap[0, $this.heapSize)))
  * </pre>
  *
- * @author Put your name here
+ * @author Leo Zhuang, Michael Xu, Jeng Zhuang
  *
  */
 public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
@@ -322,7 +322,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         assert array != null : "Violation of: array is not null";
         assert 0 <= top : "Violation of: 0 <= top";
         assert last < array.length : "Violation of: last < |array|";
-        for (int i = 0; i < last; i++) {
+        for (int i = 0; i <= last; i++) {
             assert array[i] != null : ""
                     + "Violation of: all entries in array are not null";
         }
@@ -375,7 +375,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
             assert this.heapSize <= this.heap.length : ""
                     + "Violation of: if not $this.insertionMode then"
                     + " $this.heapSize <= |$this.heap|";
-            for (int i = 0; i < this.heap.length; i++) {
+            for (int i = 0; i < this.heapSize; i++) {
                 assert this.heap[i] != null : ""
                         + "Violation of: if not $this.insertionMode then"
                         + " all entries in $this.heap are not null";
@@ -407,7 +407,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         this.machineOrder = order;
         this.insertionMode = true;
         this.entries = new Queue1L<T>();
-        this.heap = (T[]) new Object[0];
+        this.heap = (T[]) new Object[1000];
         this.heapSize = 0;
     }
 

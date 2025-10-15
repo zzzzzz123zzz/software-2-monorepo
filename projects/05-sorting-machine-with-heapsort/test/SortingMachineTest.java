@@ -10,7 +10,7 @@ import components.sortingmachine.SortingMachine;
  * JUnit test fixture for {@code SortingMachine<String>}'s constructor and
  * kernel methods.
  *
- * @author Put your name here
+ * @author Leo Zhuang, Michael Xu, Jeng Zhuang
  *
  */
 public abstract class SortingMachineTest {
@@ -121,6 +121,9 @@ public abstract class SortingMachineTest {
      * Sample test cases.
      */
 
+    /*
+     * Test the constructor of {@code SortingMachine}.
+     */
     @Test
     public final void testConstructor() {
         SortingMachine<String> m = this.constructorTest(ORDER);
@@ -128,6 +131,9 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code add} when the machine is empty.
+     */
     @Test
     public final void testAddEmpty() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true);
@@ -140,6 +146,9 @@ public abstract class SortingMachineTest {
     // TODO - add test cases for add, changeToExtractionMode, removeFirst,
     // isInInsertionMode, order, and size
 
+    /*
+     * Test {@code add} when the machine is non-empty.
+     */
     @Test
     public void testAddNonEmptyInsertionMode() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
@@ -150,6 +159,9 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code add} with multiple existing elements.
+     */
     @Test
     public void testAddAnotherInsertionMode() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
@@ -160,6 +172,9 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code add} with duplicate elements.
+     */
     @Test
     public void testAddDuplicate() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "apple",
@@ -170,6 +185,9 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code changeToExtractionMode} when the machine is empty.
+     */
     @Test
     public void testChangeToExtractionModeEmpty() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true);
@@ -178,6 +196,9 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code changeToExtractionMode} when the machine has one element.
+     */
     @Test
     public void testChangeToExtractionModeSingle() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true,
@@ -188,6 +209,10 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code changeToExtractionMode} when the machine has multiple
+     * elements.
+     */
     @Test
     public void testChangeToExtractionModeMultiple() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
@@ -198,6 +223,9 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code removeFirst} when the machine has multiple elements.
+     */
     @Test
     public void removeFirstTest() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false, "red",
@@ -209,6 +237,9 @@ public abstract class SortingMachineTest {
 
     }
 
+    /*
+     * Test {@code removeFirst} when the machine has one element.
+     */
     @Test
     public void testRemoveFirstSingle() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false,
@@ -218,12 +249,18 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    /*
+     * Test {@code isInInsertionMode} when the machine is in insertion mode.
+     */
     @Test
     public final void testIsInInsertionModeTrue() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true);
         assertEquals(true, m.isInInsertionMode());
     }
 
+    /*
+     * Test {@code isInInsertionMode} when the machine is in extraction mode.
+     */
     @Test
     public final void testIsInInsertionModeFalse() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false, "a",
@@ -231,12 +268,18 @@ public abstract class SortingMachineTest {
         assertEquals(false, m.isInInsertionMode());
     }
 
+    /*
+     * Test {@code order} in insertion mode.
+     */
     @Test
     public final void testOrder() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true);
         assertEquals(ORDER, m.order());
     }
 
+    /*
+     * Test {@code order} in extraction mode.
+     */
     @Test
     public final void testOrderExtractionMode() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false, "a",
@@ -244,6 +287,9 @@ public abstract class SortingMachineTest {
         assertEquals(ORDER, m.order());
     }
 
+    /*
+     * Test {@code size} in insertion mode with elements.
+     */
     @Test
     public final void testSizeInsertionMode() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "a",
@@ -251,12 +297,18 @@ public abstract class SortingMachineTest {
         assertEquals(3, m.size());
     }
 
+    /*
+     * Test {@code size} in insertion mode when empty.
+     */
     @Test
     public final void testSizeInsertionModeEmpty() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, true);
         assertEquals(0, m.size());
     }
 
+    /*
+     * Test {@code size} in extraction mode with elements.
+     */
     @Test
     public final void testSizeExtractionMode() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false, "a",
@@ -264,6 +316,9 @@ public abstract class SortingMachineTest {
         assertEquals(4, m.size());
     }
 
+    /*
+     * Test {@code size} in extraction mode when empty.
+     */
     @Test
     public final void testSizeExtractionModeEmpty() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false);
