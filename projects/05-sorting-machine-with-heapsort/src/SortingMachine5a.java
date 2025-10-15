@@ -322,7 +322,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         assert array != null : "Violation of: array is not null";
         assert 0 <= top : "Violation of: 0 <= top";
         assert last < array.length : "Violation of: last < |array|";
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < last; i++) {
             assert array[i] != null : ""
                     + "Violation of: all entries in array are not null";
         }
@@ -407,7 +407,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         this.machineOrder = order;
         this.insertionMode = true;
         this.entries = new Queue1L<T>();
-        this.heap = (T[]) new Object[100000];
+        this.heap = (T[]) new Object[0];
         this.heapSize = 0;
     }
 
@@ -501,6 +501,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         T result = this.heap[0];
         this.heapSize--;
         exchangeEntries(this.heap, 0, this.heapSize);
+        this.heap[this.heapSize] = null;
         siftDown(this.heap, 0, this.heapSize - 1, this.machineOrder);
         assert this.conventionHolds();
         return result;
@@ -521,7 +522,12 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
     @Override
     public final int size() {
         assert this.conventionHolds();
-        int size = this.insertionMode ? this.entries.length() : this.heapSize;
+        int size;
+        if (this.insertionMode) {
+            size = this.entries.length();
+        } else {
+            size = this.heapSize;
+        }
         return size;
     }
 
