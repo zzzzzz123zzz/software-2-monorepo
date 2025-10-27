@@ -175,10 +175,10 @@ public class List3<T> extends ListSecondary<T> {
      * Creator of initial representation.
      */
     private void createNewRep() {
-
+        // Create two smart nodes
         this.preStart = new Node();
         this.postFinish = new Node();
-
+        // Let them connect with each other
         this.preStart.next = this.postFinish;
         this.postFinish.previous = this.preStart;
 
@@ -243,6 +243,7 @@ public class List3<T> extends ListSecondary<T> {
         Node newNode = new Node();
         newNode.data = x;
 
+        // Insert the new node between lastLeft and lastleft.next
         newNode.previous = this.lastLeft;
         newNode.next = this.lastLeft.next;
 
@@ -261,6 +262,7 @@ public class List3<T> extends ListSecondary<T> {
         Node nodeToRemove = this.lastLeft.next;
         T data = nodeToRemove.data;
 
+        // Reconnect: Skip the deleted nodes
         this.lastLeft.next = nodeToRemove.next;
         nodeToRemove.next.previous = this.lastLeft;
 
