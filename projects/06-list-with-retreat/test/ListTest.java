@@ -783,4 +783,26 @@ public abstract class ListTest {
         assertEquals(expList, testList);
     }
 
+    @Test
+    public void testRetreatLeftEmptyRightNonEmpty() {
+        List<String> list1 = this.createFromArgsTest(0, "red", "blue", "green");
+        assert list1.leftLength() == 0 : "left should be empty before retreat";
+        list1.retreat();
+    }
+
+    @Test
+    public void testRetreatLeftEmptyRightEmpty() {
+        List<String> list1 = this.createFromArgsTest(0);
+        assert list1.leftLength() == 0 : "left should be empty before retreat";
+        list1.retreat();
+    }
+
+    @Test
+    public void testRetreatAfterMoveToStart() {
+        List<String> list1 = this.createFromArgsTest(2, "red", "blue", "green");
+        list1.moveToStart();
+        assert list1.leftLength() == 0 : "left should be empty before retreat";
+        list1.retreat();
+    }
+
 }
