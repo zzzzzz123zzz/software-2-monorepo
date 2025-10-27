@@ -755,4 +755,32 @@ public abstract class ListTest {
 
     // TODO - add test cases for retreat
 
+    @Test
+    public void normalRetreatCase1() {
+        List<String> testList = this.createFromArgsTest(2, "purple", "red",
+                "green", "blue", "yellow");
+        List<String> expList = this.createFromArgsTest(1, "purple", "red",
+                "green", "blue", "yellow");
+        testList.retreat();
+        assertEquals(expList, testList);
+    }
+
+    @Test
+    public void normalRetreatCase2() {
+        List<String> testList = this.createFromArgsTest(1, "red");
+        List<String> expList = this.createFromArgsTest(0, "red");
+        testList.retreat();
+        assertEquals(expList, testList);
+    }
+
+    @Test
+    public void normalRetreatCase3() {
+        List<String> testList = this.createFromArgsTest(4, "red", "green",
+                "blue", "yellow");
+        List<String> expList = this.createFromArgsTest(3, "red", "green",
+                "blue", "yellow");
+        testList.retreat();
+        assertEquals(expList, testList);
+    }
+
 }
