@@ -38,7 +38,7 @@ import components.list.ListSecondary;
  *    $this.postFinish.previous])
  * </pre>
  *
- * @author Put your name here
+ * @author Leo Zhuang, Jeng Zhuang, Michael Xu
  *
  */
 public class List3<T> extends ListSecondary<T> {
@@ -176,7 +176,16 @@ public class List3<T> extends ListSecondary<T> {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
+        this.preStart = new Node();
+        this.postFinish = new Node();
+
+        this.preStart.next = this.postFinish;
+        this.postFinish.previous = this.preStart;
+
+        this.lastLeft = this.preStart;
+
+        this.leftLength = 0;
+        this.rightLength = 0;
 
     }
 
@@ -185,7 +194,7 @@ public class List3<T> extends ListSecondary<T> {
      */
     public List3() {
 
-        // TODO - fill in body
+        this.createNewRep();
 
         assert this.conventionHolds();
     }
@@ -231,7 +240,16 @@ public class List3<T> extends ListSecondary<T> {
     public final void addRightFront(T x) {
         assert x != null : "Violation of: x is not null";
 
-        // TODO - fill in body
+        Node newNode = new Node();
+        newNode.data = x;
+
+        newNode.previous = this.lastLeft;
+        newNode.next = this.lastLeft.next;
+
+        this.lastLeft.next.previous = newNode;
+        this.lastLeft.next = newNode;
+
+        this.rightLength++;
 
         assert this.conventionHolds();
     }
@@ -240,18 +258,25 @@ public class List3<T> extends ListSecondary<T> {
     public final T removeRightFront() {
         assert this.rightLength() > 0 : "Violation of: this.right /= <>";
 
-        // TODO - fill in body
+        Node nodeToRemove = this.lastLeft.next;
+        T data = nodeToRemove.data;
+
+        this.lastLeft.next = nodeToRemove.next;
+        nodeToRemove.next.previous = this.lastLeft;
+
+        this.rightLength--;
 
         assert this.conventionHolds();
-        // Fix this line to return the result after checking the convention.
-        return null;
+        return data;
     }
 
     @Override
     public final void advance() {
         assert this.rightLength() > 0 : "Violation of: this.right /= <>";
 
-        // TODO - fill in body
+        this.lastLeft = this.lastLeft.next;
+        this.leftLength++;
+        this.rightLength--;
 
         assert this.conventionHolds();
     }
@@ -259,7 +284,9 @@ public class List3<T> extends ListSecondary<T> {
     @Override
     public final void moveToStart() {
 
-        // TODO - fill in body
+        this.rightLength += this.leftLength;
+        this.leftLength = 0;
+        this.lastLeft = this.preStart;
 
         assert this.conventionHolds();
     }
@@ -267,21 +294,15 @@ public class List3<T> extends ListSecondary<T> {
     @Override
     public final int leftLength() {
 
-        // TODO - fill in body
-
         assert this.conventionHolds();
-        // Fix this line to return the result after checking the convention.
-        return 0;
+        return this.leftLength;
     }
 
     @Override
     public final int rightLength() {
 
-        // TODO - fill in body
-
         assert this.conventionHolds();
-        // Fix this line to return the result after checking the convention.
-        return 0;
+        return this.rightLength;
     }
 
     @Override
@@ -345,7 +366,9 @@ public class List3<T> extends ListSecondary<T> {
     @Override
     public final void moveToFinish() {
 
-        // TODO - fill in body
+        this.leftLength += this.rightLength;
+        this.rightLength = 0;
+        this.lastLeft = this.postFinish.previous;
 
         assert this.conventionHolds();
     }
@@ -354,7 +377,9 @@ public class List3<T> extends ListSecondary<T> {
     public final void retreat() {
         assert this.leftLength() > 0 : "Violation of: this.left /= <>";
 
-        // TODO - fill in body
+        this.lastLeft = this.lastLeft.previous;
+        this.leftLength--;
+        this.rightLength++;
 
         assert this.conventionHolds();
     }
