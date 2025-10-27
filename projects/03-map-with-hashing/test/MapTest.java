@@ -287,7 +287,8 @@ public abstract class MapTest {
         Map<String, String> testMap = this.createFromArgsTest("One", "Two",
                 "Three", "Four", "Five", "Six");
         int size = testMap.size();
-        assertEquals(3, size);
+        final int expSize = 3;
+        assertEquals(expSize, size);
     }
 
 }
