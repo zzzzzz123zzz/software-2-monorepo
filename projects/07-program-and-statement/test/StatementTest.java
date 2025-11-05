@@ -23,6 +23,10 @@ public abstract class StatementTest {
      * The name of a file containing a sequence of BL statements.
      */
     private static final String FILE_NAME_1 = "projects/07-program-and-statement/data/statement-sample.bl";
+    private static final String FILE_NAME_2 = "projects/07-program-and-statement/data/statement-call-only.bl";
+    private static final String FILE_NAME_3 = "projects/07-program-and-statement/data/statement-if-else.bl";
+    private static final String FILE_NAME_4 = "projects/07-program-and-statement/data/statement-while.bl";
+    private static final String FILE_NAME_5 = "projects/07-program-and-statement/data/statement-block-mixed.bl";
 
     // TODO - define file names for additional test inputs
 
