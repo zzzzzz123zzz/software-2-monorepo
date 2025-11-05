@@ -1,5 +1,0 @@
-IF next-is-enemy THEN
-  WHILE random DO
-    infect
-  END WHILE
-END IF
