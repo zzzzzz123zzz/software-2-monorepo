@@ -1,0 +1,7 @@
+turnleft
+IF next-is-not-enemy THEN
+  move
+END IF
+WHILE random DO
+  turnright
+END WHILE
