@@ -4,16 +4,18 @@ import org.junit.Test;
 
 import components.map.Map;
 import components.map.Map.Pair;
+import components.map.Map1L;
 import components.program.Program;
 import components.simplereader.SimpleReader;
 import components.simplereader.SimpleReader1L;
 import components.statement.Statement;
+import components.statement.Statement1;
 
 /**
  * JUnit test fixture for {@code Program}'s constructor and kernel methods.
  *
  * @author Wayne Heym
- * @author Put your name here
+ * @author Leo Zhuang, Jeng Zhuang, Michael Xu
  *
  */
 public abstract class ProgramTest {
@@ -287,5 +289,122 @@ public abstract class ProgramTest {
     }
 
     // TODO - provide additional test cases to thoroughly test ProgramKernel
+    /**
+     * Test name() on a newly constructed (empty) Program.
+     */
+    @Test
+    public final void testNameOnEmptyProgram() {
+        /*
+         * Setup
+         */
+        Program pTest = this.constructorTest();
+        Program pRef = this.constructorRef();
 
+        /*
+         * The call
+         */
+        String nameTest = pTest.name();
+        String nameRef = pRef.name();
+
+        /*
+         * Evaluation
+         */
+        assertEquals(nameRef, nameTest);
+        assertEquals(pRef, pTest);
+    }
+
+    /**
+     * Test setName on empty program (initial state).
+     */
+    @Test
+    public final void testSetNameOnEmptyProgram() {
+        Program pTest = this.constructorTest();
+        Program pRef = this.constructorRef();
+
+        pTest.setName("MyProgram");
+        pRef.setName("MyProgram");
+
+        assertEquals(pRef, pTest);
+    }
+
+    /**
+     * Test setName twice to make sure name updates correctly.
+     */
+    @Test
+    public final void testSetNameTwice() {
+        Program pTest = this.createFromFileTest(FILE_NAME_1);
+        Program pRef = this.createFromFileRef(FILE_NAME_1);
+
+        pTest.setName("FirstName");
+        pRef.setName("FirstName");
+        pTest.setName("SecondName");
+        pRef.setName("SecondName");
+
+        assertEquals(pRef, pTest);
+    }
+
+    /**
+     * Test newContext when context is empty.
+     */
+    @Test
+    public final void testNewContextEmpty() {
+        Program pTest = this.constructorTest();
+        Program pRef = this.constructorRef();
+
+        Map<String, Statement> cTest = pTest.newContext();
+        Map<String, Statement> cRef = pRef.newContext();
+
+        assertEquals(pRef, pTest);
+        assertEquals(cRef, cTest);
+    }
+
+    /**
+     * Test swapContext swaps with an empty context.
+     */
+    @Test
+    public final void testSwapContextWithEmpty() {
+        Program pTest = this.createFromFileTest(FILE_NAME_1);
+        Program pRef = this.createFromFileRef(FILE_NAME_1);
+        Map<String, Statement> emptyContextTest = new Map1L<>();
+        Map<String, Statement> emptyContextRef = new Map1L<>();
+
+        pTest.swapContext(emptyContextTest);
+        pRef.swapContext(emptyContextRef);
+
+        assertEquals(pRef, pTest);
+        assertEquals(emptyContextRef, emptyContextTest);
+    }
+
+    /**
+     * Test newBody when body is empty.
+     */
+    @Test
+    public final void testNewBodyEmpty() {
+        Program pTest = this.constructorTest();
+        Program pRef = this.constructorRef();
+
+        Statement bTest = pTest.newBody();
+        Statement bRef = pRef.newBody();
+
+        assertEquals(pRef, pTest);
+        assertEquals(bRef, bTest);
+    }
+
+    /**
+     * Test swapBody swaps with an empty body.
+     */
+    @Test
+    public final void testSwapBodyWithEmpty() {
+        Program pTest = this.createFromFileTest(FILE_NAME_1);
+        Program pRef = this.createFromFileRef(FILE_NAME_1);
+
+        Statement emptyBodyTest = new Statement1();
+        Statement emptyBodyRef = new Statement1();
+
+        pTest.swapBody(emptyBodyTest);
+        pRef.swapBody(emptyBodyRef);
+
+        assertEquals(pRef, pTest);
+        assertEquals(emptyBodyRef, emptyBodyTest);
+    }
 }

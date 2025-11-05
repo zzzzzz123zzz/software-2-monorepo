@@ -14,7 +14,7 @@ import components.utilities.Tokenizer;
  * JUnit test fixture for {@code Statement}'s constructor and kernel methods.
  *
  * @author Wayne Heym
- * @author Put your name here
+ * @author Leo Zhuang, Jeng Zhuang, Michael Xu
  *
  */
 public abstract class StatementTest {
@@ -29,12 +29,6 @@ public abstract class StatementTest {
     private static final String FILE_NAME_5 = "projects/07-program-and-statement/data/statement-block-mixed.bl";
 
     // TODO - define file names for additional test inputs
-    private static final String FILE_NAME_EMPTY = "projects/07-program-and-statement/data/statement-empty.bl";
-
-    private static final String FILE_NAME_SIMPLE = "projects/07-program-and-statement/data/statement-simple.bl";
-
-    private static final String FILE_NAME_NESTED = "projects/07-program-and-statement/data/statement-nested.bl";
-
     /**
      * Invokes the {@code Statement} constructor for the implementation under
      * test and returns the result.
