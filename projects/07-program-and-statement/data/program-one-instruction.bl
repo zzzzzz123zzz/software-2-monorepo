@@ -1,0 +1,7 @@
+PROGRAM SingleInstr IS
+  INSTRUCTION doMove IS
+    move
+  END doMove
+BEGIN
+  doMove
+END SingleInstr
