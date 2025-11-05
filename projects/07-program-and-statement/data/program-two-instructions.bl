@@ -1,0 +1,11 @@
+PROGRAM TwoInstrTest IS
+  INSTRUCTION left IS
+    turnleft
+  END left
+  INSTRUCTION right IS
+    turnright
+  END right
+BEGIN
+  left
+  right
+END TwoInstrTest
