@@ -1,0 +1,6 @@
+PROGRAM LoopOnly IS
+BEGIN
+  WHILE true DO
+    move
+  END WHILE
+END LoopOnly
