@@ -22,6 +22,10 @@ public abstract class ProgramTest {
      * The name of a file containing a BL program.
      */
     private static final String FILE_NAME_1 = "projects/07-program-and-statement/data/program-sample.bl";
+    private static final String FILE_NAME_2 = "projects/07-program-and-statement/data/program-empty.bl";
+    private static final String FILE_NAME_3 = "projects/07-program-and-statement/data/program-one-instruction.bl";
+    private static final String FILE_NAME_4 = "projects/07-program-and-statement/data/program-two-instructions.bl";
+    private static final String FILE_NAME_5 = "projects/07-program-and-statement/data/program-while-loop";
 
     // TODO - define file names for additional test inputs
 
