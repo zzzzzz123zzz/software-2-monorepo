@@ -25,6 +25,11 @@ public abstract class StatementTest {
     private static final String FILE_NAME_1 = "projects/07-program-and-statement/data/statement-sample.bl";
 
     // TODO - define file names for additional test inputs
+    private static final String FILE_NAME_EMPTY = "projects/07-program-and-statement/data/statement-empty.bl";
+
+    private static final String FILE_NAME_SIMPLE = "projects/07-program-and-statement/data/statement-simple.bl";
+
+    private static final String FILE_NAME_NESTED = "projects/07-program-and-statement/data/statement-nested.bl";
 
     /**
      * Invokes the {@code Statement} constructor for the implementation under
