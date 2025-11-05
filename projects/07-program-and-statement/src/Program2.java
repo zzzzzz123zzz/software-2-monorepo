@@ -105,7 +105,9 @@ public class Program2 extends ProgramSecondary {
      * Creator of initial representation.
      */
     private void createNewRep() {
-
+        this.name = "";
+        this.context = new Map1L<>();
+        this.body = new Statement1();
         // TODO - fill in body
         // Make sure to use Statement1 from the library
         // Use Map1L for the context if you want the asserts below to match
@@ -168,18 +170,16 @@ public class Program2 extends ProgramSecondary {
         assert n != null : "Violation of: n is not null";
         assert Tokenizer.isIdentifier(n) : ""
                 + "Violation of: n is a valid IDENTIFIER";
-
+        this.name = n;
         // TODO - fill in body
 
     }
 
     @Override
     public final String name() {
-
+        return this.name;
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        return null;
     }
 
     @Override
@@ -188,7 +188,9 @@ public class Program2 extends ProgramSecondary {
         // TODO - fill in body
 
         // Fix this line to return the result.
-        return null;
+        Map<String, Statement> a = this.context;
+        this.context = new Map1L<>();
+        return a;
     }
 
     @Override
@@ -204,7 +206,10 @@ public class Program2 extends ProgramSecondary {
                 + " are all BLOCK statements";
 
         // TODO - fill in body
-
+        Map<String, Statement> a = this.context;
+        this.context = c;
+        c.clear();
+        c.transferFrom(a);
     }
 
     @Override
@@ -213,7 +218,9 @@ public class Program2 extends ProgramSecondary {
         // TODO - fill in body
 
         // Fix this line to return the result.
-        return null;
+        Statement a = this.body;
+        this.body = new Statement1();
+        return a;
     }
 
     @Override
@@ -221,7 +228,10 @@ public class Program2 extends ProgramSecondary {
         assert b != null : "Violation of: b is not null";
         assert b instanceof Statement1 : "Violation of: b is a Statement1";
         assert b.kind() == Kind.BLOCK : "Violation of: b is a BLOCK statement";
-
+        Statement a = this.body;
+        this.body = b;
+        b.clear();
+        b.transferFrom(a);
         // TODO - fill in body
 
     }
