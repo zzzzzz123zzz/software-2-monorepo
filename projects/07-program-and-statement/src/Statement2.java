@@ -115,7 +115,16 @@ public class Statement2 extends StatementSecondary {
      * Creator of initial representation.
      */
     private void createNewRep() {
-
+        StatementLabel label = new StatementLabel(Kind.BLOCK);
+        Sequence<Tree<StatementLabel>> children;
+        if (this.rep != null) {
+            children = this.rep.newSequenceOfTree();
+        } else {
+            Statement2 temp = new Statement2();
+            children = temp.rep.newSequenceOfTree();
+        }
+        this.rep = this.newInstance().rep;
+        this.rep.assemble(label, children);
         // TODO - fill in body
 
     }
@@ -175,7 +184,7 @@ public class Statement2 extends StatementSecondary {
         // TODO - fill in body
 
         // Fix this line to return the result.
-        return null;
+        return this.rep.root().kind;
     }
 
     @Override
@@ -191,6 +200,12 @@ public class Statement2 extends StatementSecondary {
         assert s.kind() != Kind.BLOCK : "Violation of: [s is not a BLOCK statement]";
 
         // TODO - fill in body
+        Statement2 localS = (Statement2) s;
+        Sequence<Tree<StatementLabel>> b = this.rep.newSequenceOfTree();
+        StatementLabel a = this.rep.disassemble(b);
+        b.add(pos, localS.rep);
+        this.rep.assemble(a, b);
+        localS.createNewRep();
 
     }
 
@@ -208,7 +223,10 @@ public class Statement2 extends StatementSecondary {
          * code.
          */
         Statement2 s = this.newInstance();
-
+        Sequence<Tree<StatementLabel>> a = this.rep.newSequenceOfTree();
+        StatementLabel b = this.rep.disassemble(a);
+        s.rep = a.remove(pos);
+        this.rep.assemble(b, a);
         // TODO - fill in body
 
         return s;
@@ -221,8 +239,11 @@ public class Statement2 extends StatementSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        return 0;
+        Sequence<Tree<StatementLabel>> a = this.rep.newSequenceOfTree();
+        StatementLabel b = this.rep.disassemble(a);
+        int length = a.length();
+        this.rep.assemble(b, a);
+        return length;
     }
 
     @Override
@@ -272,6 +293,15 @@ public class Statement2 extends StatementSecondary {
                 .kind() == Kind.BLOCK : "Violation of: [s2 is a BLOCK statement]";
 
         // TODO - fill in body
+        Statement2 a = (Statement2) s1;
+        Statement2 b = (Statement2) s2;
+        StatementLabel x = new StatementLabel(Kind.IF_ELSE, c);
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        children.add(0, a.rep);
+        children.add(1, b.rep);
+        this.rep.assemble(x, children);
+        a.createNewRep();
+        b.createNewRep();
 
     }
 
@@ -289,8 +319,14 @@ public class Statement2 extends StatementSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        return null;
+        Statement2 a = (Statement2) s1;
+        Statement2 b = (Statement2) s2;
+        Sequence<Tree<StatementLabel>> c = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(c);
+        a.rep = c.remove(0);
+        b.rep = c.remove(0);
+        this.createNewRep();
+        return label.condition;
     }
 
     @Override
@@ -302,6 +338,12 @@ public class Statement2 extends StatementSecondary {
         assert s.kind() == Kind.BLOCK : "Violation of: [s is a BLOCK statement]";
 
         // TODO - fill in body
+        Statement2 a = (Statement2) s;
+        StatementLabel b = new StatementLabel(Kind.WHILE, c);
+        Sequence<Tree<StatementLabel>> x = this.rep.newSequenceOfTree();
+        x.add(0, a.rep);
+        this.rep.assemble(b, x);
+        a.createNewRep();
 
     }
 
@@ -315,8 +357,12 @@ public class Statement2 extends StatementSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        return null;
+        Statement2 a = (Statement2) s;
+        Sequence<Tree<StatementLabel>> b = this.rep.newSequenceOfTree();
+        StatementLabel c = this.rep.disassemble(b);
+        a.rep = b.remove(0);
+        this.createNewRep();
+        return c.condition;
     }
 
     @Override
@@ -326,6 +372,9 @@ public class Statement2 extends StatementSecondary {
                 + "Violation of: inst is a valid IDENTIFIER";
 
         // TODO - fill in body
+        StatementLabel a = new StatementLabel(Kind.CALL, inst);
+        Sequence<Tree<StatementLabel>> b = this.rep.newSequenceOfTree();
+        this.rep.assemble(a, b);
 
     }
 
@@ -336,8 +385,10 @@ public class Statement2 extends StatementSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        return null;
+        Sequence<Tree<StatementLabel>> a = this.rep.newSequenceOfTree();
+        StatementLabel b = this.rep.disassemble(a);
+        this.createNewRep();
+        return b.instruction;
     }
 
 }
