@@ -5,6 +5,7 @@ import components.simplewriter.SimpleWriter;
 import components.simplewriter.SimpleWriter1L;
 import components.statement.Statement;
 import components.statement.Statement1;
+import components.utilities.Reporter;
 import components.utilities.Tokenizer;
 
 /**
@@ -64,6 +65,28 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: <\"IF\"> is proper prefix of tokens";
 
         // TODO - fill in body
+        tokens.dequeue();
+        String a = tokens.dequeue();
+        Reporter.assertElseFatalError(Tokenizer.isCondition(a),
+                "Expected condition string, got: " + a);
+        Condition b = parseCondition(a);
+        Reporter.assertElseFatalError(tokens.dequeue().equals("THEN"),
+                "Expected: THEN");
+
+        Statement c = new Statement1Parse1();
+        c.parse(tokens);
+        if (tokens.front().equals("ELSE")) {
+            tokens.dequeue();
+            Statement d = new Statement1Parse1();
+            d.parse(tokens);
+            Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
+                    "Expected: END");
+            s.assembleIfElse(b, c, d);
+        } else {
+            Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
+                    "Expected: END");
+            s.assembleIf(b, c);
+        }
 
     }
 
@@ -95,7 +118,19 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: <\"WHILE\"> is proper prefix of tokens";
 
         // TODO - fill in body
+        tokens.dequeue();
+        String a = tokens.dequeue();
+        Reporter.assertElseFatalError(Tokenizer.isCondition(a),
+                "Expected condition, got: " + a);
+        Condition b = parseCondition(a);
+        Reporter.assertElseFatalError(tokens.dequeue().equals("DO"),
+                "Expected: DO");
+        Statement c = new Statement1Parse1();
+        c.parse(tokens);
+        Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
+                "Expected: END");
 
+        s.assembleWhile(b, c);
     }
 
     /**
@@ -122,6 +157,8 @@ public final class Statement1Parse1 extends Statement1 {
                         + "Violation of: identifier string is proper prefix of tokens";
 
         // TODO - fill in body
+        String a = tokens.dequeue();
+        s.assembleCall(a);
 
     }
 
@@ -147,6 +184,16 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: Tokenizer.END_OF_INPUT is a suffix of tokens";
 
         // TODO - fill in body
+        String a = tokens.front();
+        if (a.equals("IF")) {
+            parseIf(tokens, this);
+        } else if (a.equals("WHILE")) {
+            parseWhile(tokens, this);
+        } else if (Tokenizer.isIdentifier(a)) {
+            parseCall(tokens, this);
+        } else {
+            Reporter.assertElseFatalError(false, "Unexpected token: " + a);
+        }
 
     }
 
@@ -157,6 +204,13 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: Tokenizer.END_OF_INPUT is a suffix of tokens";
 
         // TODO - fill in body
+        this.clear();
+        while (!tokens.front().equals("END")
+                && !tokens.front().equals("ELSE")) {
+            Statement s = new Statement1Parse1();
+            s.parse(tokens);
+            this.addToBlock(this.lengthOfBlock(), s);
+        }
 
     }
 
