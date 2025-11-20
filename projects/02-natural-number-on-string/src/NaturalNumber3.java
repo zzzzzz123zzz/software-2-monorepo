@@ -157,15 +157,19 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
     @Override
     public final int divideBy10() {
         int lastDigit;
+
         if (this.rep.equals("")) {
             lastDigit = 0;
+        } else {
+            lastDigit = Character
+                    .getNumericValue(this.rep.charAt(this.rep.length() - 1));
+            this.rep = this.rep.substring(0, this.rep.length() - 1);
+
+            if (this.rep.equals("0")) {
+                this.rep = "";
+            }
         }
-        lastDigit = Character
-                .getNumericValue(this.rep.charAt(this.rep.length() - 1));
-        this.rep = this.rep.substring(0, this.rep.length() - 1);
-        if (this.rep.equals("0")) {
-            this.rep = "";
-        }
+
         return lastDigit;
     }
 
