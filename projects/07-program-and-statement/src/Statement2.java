@@ -2,6 +2,7 @@ import components.sequence.Sequence;
 import components.statement.Statement;
 import components.statement.StatementSecondary;
 import components.tree.Tree;
+import components.tree.Tree1;
 import components.utilities.Tokenizer;
 
 /**
@@ -115,17 +116,13 @@ public class Statement2 extends StatementSecondary {
      * Creator of initial representation.
      */
     private void createNewRep() {
+        // Make a BLOCK label
         StatementLabel label = new StatementLabel(Kind.BLOCK);
-        Sequence<Tree<StatementLabel>> children;
-        if (this.rep != null) {
-            children = this.rep.newSequenceOfTree();
-        } else {
-            Statement2 temp = new Statement2();
-            children = temp.rep.newSequenceOfTree();
-        }
-        this.rep = this.newInstance().rep;
+        // Create a new Tree1 for rep
+        this.rep = new Tree1<StatementLabel>();
+        // Create an empty sequence of children
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
         this.rep.assemble(label, children);
-        // TODO - fill in body
 
     }
 

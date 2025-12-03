@@ -105,7 +105,7 @@ public class Program2 extends ProgramSecondary {
      * Creator of initial representation.
      */
     private void createNewRep() {
-        this.name = "";
+        this.name = "Unnamed";
         this.context = new Map1L<>();
         this.body = new Statement1();
         // TODO - fill in body
@@ -188,9 +188,9 @@ public class Program2 extends ProgramSecondary {
         // TODO - fill in body
 
         // Fix this line to return the result.
-        Map<String, Statement> a = this.context;
-        this.context = new Map1L<>();
-        return a;
+        Map<String, Statement> old = this.context;
+        this.context = old.newInstance();
+        return old;
     }
 
     @Override
@@ -208,7 +208,6 @@ public class Program2 extends ProgramSecondary {
         // TODO - fill in body
         Map<String, Statement> a = this.context;
         this.context = c;
-        c.clear();
         c.transferFrom(a);
     }
 
@@ -218,9 +217,9 @@ public class Program2 extends ProgramSecondary {
         // TODO - fill in body
 
         // Fix this line to return the result.
-        Statement a = this.body;
-        this.body = new Statement1();
-        return a;
+        Statement old = this.body;
+        this.body = old.newInstance();
+        return old;
     }
 
     @Override
@@ -230,7 +229,6 @@ public class Program2 extends ProgramSecondary {
         assert b.kind() == Kind.BLOCK : "Violation of: b is a BLOCK statement";
         Statement a = this.body;
         this.body = b;
-        b.clear();
         b.transferFrom(a);
         // TODO - fill in body
 
