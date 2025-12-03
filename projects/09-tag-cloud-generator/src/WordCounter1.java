@@ -9,7 +9,6 @@ import components.simplereader.SimpleReader1L;
 import components.simplewriter.SimpleWriter;
 import components.simplewriter.SimpleWriter1L;
 import components.sortingmachine.SortingMachine;
-import components.sortingmachine.SortingMachine4;
 
 /**
  * This program is a word counter which users can input a file that contains
@@ -28,12 +27,29 @@ public final class WordCounter1 {
     private WordCounter1() {
     }
 
-    public static Comparator<String> stringComparator = new Comparator<String>() {
+    private static class CompareCount
+            implements Comparator<Map.Pair<String, Integer>> {
+
         @Override
-        public int compare(String s1, String s2) {
-            return s1.compareTo(s2);
+        public int compare(Map.Pair<String, Integer> a,
+                Map.Pair<String, Integer> b) {
+            return b.value().compareTo(a.value()); // descending
         }
-    };
+    }
+
+    /**
+     * Comparator to sort Map.Pair alphabetically.
+     */
+    private static class CompareWords
+            implements Comparator<Map.Pair<String, Integer>> {
+
+        @Override
+        public int compare(Map.Pair<String, Integer> a,
+                Map.Pair<String, Integer> b) {
+
+            return a.key().toLowerCase().compareTo(b.key().toLowerCase());
+        }
+    }
 
     /**
      * Counts the number of times each word appears in the given file, and
@@ -175,7 +191,7 @@ public final class WordCounter1 {
          * the key of the map alphabetically
          */
         Map<String, Integer> wordList = new Map1L<String, Integer>();
-        SortingMachine<String> sm = new SortingMachine4<>(stringComparator);
+        SortingMachine<Map.Pair<String, Integer>> sm;
         /*
          * Print in .html format.
          */
