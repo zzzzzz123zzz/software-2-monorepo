@@ -12,10 +12,8 @@ import components.sortingmachine.SortingMachine;
 import components.sortingmachine.SortingMachine4;
 
 /**
- * This program is a word counter which users can input a file that contains
- * words into this program. The program can then check the time of appearance of
- * each word in the file. After counting, the program will generate an .html
- * file that includes a table listing all words with their appearing times.
+ * TagCloud generates an XHTML file containing a tag cloud of the top N most
+ * frequent words from a user-specified input text file.
  *
  * @author LEO ZHUANG, JENG ZHUANG, MICHAEL XU
  *
@@ -186,7 +184,7 @@ public final class TagCloud {
                 "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
         out.println("<title>Top " + n + " words in " + file + "</title>");
         out.println(
-                "<link href=\"http://web.cse.ohio-state.edu/software/2221/web-interfaces/tagcloud.css\""
+                "<link href=\"http://web.cse.ohio-state.edu/software/2231/web-interfaces/tagcloud.css\""
                         + " rel=\"stylesheet\" type=\"text/css\" />");
         out.println(
                 "<link href=\"tagcloud.css\" rel=\"stylesheet\" type=\"text/css\" />");
