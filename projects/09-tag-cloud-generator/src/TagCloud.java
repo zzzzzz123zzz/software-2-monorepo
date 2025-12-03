@@ -91,7 +91,7 @@ public final class TagCloud {
      * @return a set of separator characters
      */
     private static Set<Character> buildSeparators() {
-        String sep = " \t\n\r,-.!?[]';:/(){}*\"<>";
+        String sep = " \t\n\r,-.!?[]';:/(){}*\"<>`";
 
         Set<Character> s = new Set1L<>();
         for (int i = 0; i < sep.length(); i++) {
