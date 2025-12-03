@@ -19,21 +19,24 @@ import components.sortingmachine.SortingMachine;
  * @author LEO ZHUANG, JENG ZHUANG, MICHAEL XU
  *
  */
-public final class WordCounter1 {
+public final class TagCloud {
 
     /**
      * No argument constructor--private to prevent instantiation.
      */
-    private WordCounter1() {
+    private TagCloud() {
     }
 
+    /**
+     * Comparator to sort Map.Pair by decreasing count.
+     */
     private static class CompareCount
             implements Comparator<Map.Pair<String, Integer>> {
 
         @Override
         public int compare(Map.Pair<String, Integer> a,
                 Map.Pair<String, Integer> b) {
-            return b.value().compareTo(a.value()); // descending
+            return b.value().compareTo(a.value());
         }
     }
 
@@ -49,6 +52,27 @@ public final class WordCounter1 {
 
             return a.key().toLowerCase().compareTo(b.key().toLowerCase());
         }
+    }
+
+    /**
+     * Returns the next word from the given line starting at the given position.
+     * Separators include whitespace and punctuation.
+     */
+    private static String nextWord(String s, int start, Set<Character> sep) {
+        int i = start;
+
+        // skip separators
+        while (i < s.length() && sep.contains(s.charAt(i))) {
+            i++;
+        }
+        int begin = i;
+
+        // read until separator
+        while (i < s.length() && !sep.contains(s.charAt(i))) {
+            i++;
+        }
+
+        return s.substring(begin, i);
     }
 
     /**
