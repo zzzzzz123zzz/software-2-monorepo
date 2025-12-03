@@ -1,13 +1,15 @@
+import java.util.Comparator;
+
 import components.map.Map;
 import components.map.Map1L;
-import components.sequence.Sequence;
-import components.sequence.Sequence1L;
 import components.set.Set;
 import components.set.Set1L;
 import components.simplereader.SimpleReader;
 import components.simplereader.SimpleReader1L;
 import components.simplewriter.SimpleWriter;
 import components.simplewriter.SimpleWriter1L;
+import components.sortingmachine.SortingMachine;
+import components.sortingmachine.SortingMachine4;
 
 /**
  * This program is a word counter which users can input a file that contains
@@ -26,6 +28,13 @@ public final class WordCounter1 {
     private WordCounter1() {
     }
 
+    public static Comparator<String> stringComparator = new Comparator<String>() {
+        @Override
+        public int compare(String s1, String s2) {
+            return s1.compareTo(s2);
+        }
+    };
+
     /**
      * Counts the number of times each word appears in the given file, and
      * stores the results in the provided map. Words are defined as maximal
@@ -38,9 +47,9 @@ public final class WordCounter1 {
      * @param thelist
      *            the map to update with words and their frequencies; must not
      *            be null
-     * @param theSequence
-     *            the sequence to store the keys corresponding to the map but in
-     *            an alphabetical order
+     * @param sortList
+     *            the list to store the words that exists in the file in
+     *            alphabetical order
      *
      * @requires fileName != null and thelist != null
      * @ensures thelist contains exactly one entry for each distinct word in the
@@ -49,7 +58,7 @@ public final class WordCounter1 {
      *          theSequence.entry(i).compareTo(theSequence.entry(i+1)) < 1
      */
     public static void counter(String fileName, Map<String, Integer> thelist,
-            Sequence<String> theSequence) {
+            SortingMachine<String> sortList) {
         SimpleReader in = new SimpleReader1L(fileName);
         /*
          * Identify the separators including punctuation and space.
@@ -63,6 +72,15 @@ public final class WordCounter1 {
         separators.add('\n');
         separators.add('\t');
         separators.add('-');
+        separators.add('*');
+        separators.add('{');
+        separators.add('}');
+        separators.add('\'');
+        separators.add('\"');
+        separators.add('<');
+        separators.add('>');
+        separators.add('[');
+        separators.add(']');
         /*
          * Separate words by separators, and then count them into a Map by
          * setting the words as keys and number of times as values.
@@ -106,58 +124,8 @@ public final class WordCounter1 {
                         if (thelist.hasKey(temp)) {
                             thelist.replaceValue(temp, thelist.value(temp) + 1);
                         } else {
+                            sortList.add(temp);
                             thelist.add(temp, 1);
-                        }
-                        /*
-                         * Add the keys alphabetically into a sequence. Compare
-                         * temp to strings stored in the sequence. If the
-                         * sequence is empty, directly add temp to the sequence.
-                         */
-                        if (theSequence.length() > 0) {
-                            /*
-                             * Set up the inputIndex for comparing the strings
-                             * stored in the sequence and the boolean value for
-                             * deciding when to stop comparing.
-                             */
-                            int inputIndex = 0;
-                            boolean toContinue = true;
-                            /*
-                             * Loop through the sequence.
-                             */
-                            while (inputIndex < theSequence.length()
-                                    && toContinue) {
-                                /*
-                                 * When temp is smaller than the present string,
-                                 * stop looping and set toContinue as false.
-                                 * When temp is bigger than the present string,
-                                 * increment the index. If temp is the same to
-                                 * the present string, set index bigger than the
-                                 * sequence's length to stop looping.
-                                 */
-                                if (temp.compareTo(
-                                        theSequence.entry(inputIndex)) < 0) {
-                                    toContinue = false;
-                                } else if (temp.compareTo(
-                                        theSequence.entry(inputIndex)) > 0) {
-                                    inputIndex++;
-                                } else {
-                                    inputIndex = theSequence.length() + 1;
-                                }
-                            }
-                            /*
-                             * !toContinue reflects that temp should be added to
-                             * the sequence at current inputIndex. inputIndex==
-                             * theSequence.length() reflects that temp is the
-                             * biggest value, then add temp to the end of the
-                             * sequence.
-                             */
-                            if (!toContinue) {
-                                theSequence.add(inputIndex, temp);
-                            } else if (inputIndex == theSequence.length()) {
-                                theSequence.add(theSequence.length(), temp);
-                            }
-                        } else {
-                            theSequence.add(0, temp);
                         }
                     }
                     /*
@@ -207,7 +175,7 @@ public final class WordCounter1 {
          * the key of the map alphabetically
          */
         Map<String, Integer> wordList = new Map1L<String, Integer>();
-        Sequence<String> keyList = new Sequence1L<String>();
+        SortingMachine<String> sm = new SortingMachine4<>(stringComparator);
         /*
          * Print in .html format.
          */
@@ -232,13 +200,14 @@ public final class WordCounter1 {
         /*
          * Count the words from the input file.
          */
-        counter(inputFileName, wordList, keyList);
+        counter(inputFileName, wordList, sm);
         /*
          * Print each word and its existing time accordingly in .html format
          * with the order sorted in the sequence.
          */
-        for (int j = 0; j < keyList.length(); j++) {
-            Map.Pair<String, Integer> pair = wordList.remove(keyList.entry(j));
+        sm.changeToExtractionMode();
+        while (sm.size() > 0) {
+            Map.Pair<String, Integer> pair = wordList.remove(sm.removeFirst());
             fileOut.println("<tr><td>" + pair.key() + "</td><td>" + pair.value()
                     + "</td></tr>");
         }
