@@ -783,23 +783,17 @@ public abstract class ListTest {
         assertEquals(expList, testList);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testRetreatLeftEmptyRightNonEmpty() {
-        List<String> list1 = this.createFromArgsTest(0, "red", "blue", "green");
-        list1.retreat();
-    }
+    @Test
+    public void retreatLeftOneRightNonEmpty() {
+        List<String> testList = this.createFromArgsTest(1, "red", "green",
+                "blue");
 
-    @Test(expected = IllegalStateException.class)
-    public void testRetreatLeftEmptyRightEmpty() {
-        List<String> list1 = this.createFromArgsTest(0);
-        list1.retreat();
-    }
+        List<String> expected = this.createFromArgsRef(0, "red", "green",
+                "blue");
 
-    @Test(expected = IllegalStateException.class)
-    public void testRetreatAfterMoveToStart() {
-        List<String> list1 = this.createFromArgsTest(2, "red", "blue", "green");
-        list1.moveToStart();
-        list1.retreat();
+        testList.retreat();
+
+        assertEquals(expected, testList);
     }
 
 }

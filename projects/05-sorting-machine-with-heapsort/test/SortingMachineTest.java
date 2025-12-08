@@ -322,6 +322,9 @@ public abstract class SortingMachineTest {
     @Test
     public final void testSizeExtractionModeEmpty() {
         SortingMachine<String> m = this.createFromArgsTest(ORDER, false);
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, false);
+
         assertEquals(0, m.size());
+        assertEquals(mExpected, m);
     }
 }

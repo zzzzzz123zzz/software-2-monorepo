@@ -1,3 +1,4 @@
+import components.map.Map;
 import components.program.Program;
 import components.program.Program1;
 import components.queue.Queue;
@@ -60,16 +61,19 @@ public final class Program1Parse1 extends Program1 {
                                                 + "Violation of: <\"INSTRUCTION\"> is proper prefix of tokens";
 
                 // TODO - fill in body
-                Reporter.assertElseFatalError(
-                                tokens.dequeue().equals("INSTRUCTION"),
-                                "Expected: INSTRUCTION");
+                tokens.dequeue();
                 String a = tokens.dequeue();
                 Reporter.assertElseFatalError(Tokenizer.isIdentifier(a),
                                 "Expected identifier for instruction name, got: "
                                                 + a);
+                Reporter.assertElseFatalError(!(a.equals("move")
+                                || a.equals("turnleft") || a.equals("turnright")
+                                || a.equals("infect") || a.equals("skip")),
+                                "Instruction name cannot be a primitive instruction: "
+                                                + a);
                 Reporter.assertElseFatalError(tokens.dequeue().equals("IS"),
                                 "Expected: IS");
-                body.parse(tokens);
+                body.parseBlock(tokens);
                 Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
                                 "Expected: END");
                 String b = tokens.dequeue();
@@ -123,36 +127,23 @@ public final class Program1Parse1 extends Program1 {
                 this.setName(programName);
                 Reporter.assertElseFatalError(tokens.dequeue().equals("IS"),
                                 "Expected: IS");
-                Queue<String> definedInstructionNames = new components.queue.Queue1L<>();
+                // create context map
+                Map<String, Statement> context = this.newContext();
                 while (tokens.front().equals("INSTRUCTION")) {
-                        Statement instrBody = new Statement1Parse1();
+                        Statement instrBody = this.newBody();
                         String instrName = parseInstruction(tokens, instrBody);
-                        Reporter.assertElseFatalError(!(instrName.equals("move")
-                                        || instrName.equals("turnleft")
-                                        || instrName.equals("turnright")
-                                        || instrName.equals("infect")
-                                        || instrName.equals("skip")),
-                                        "Instruction name cannot be a primitive instruction: "
-                                                        + instrName);
-                        boolean duplicate = false;
-                        int size = definedInstructionNames.length();
-                        for (int i = 0; i < size; i++) {
-                                String existing = definedInstructionNames
-                                                .dequeue();
-                                if (existing.equals(instrName)) {
-                                        duplicate = true;
-                                }
-                                definedInstructionNames.enqueue(existing);
-                        }
-                        Reporter.assertElseFatalError(!duplicate,
+
+                        Reporter.assertElseFatalError(
+                                        !context.hasKey(instrName),
                                         "Duplicate instruction name: "
                                                         + instrName);
-                        definedInstructionNames.enqueue(instrName);
+                        context.add(instrName, instrBody);
                 }
                 Reporter.assertElseFatalError(tokens.dequeue().equals("BEGIN"),
                                 "Expected: BEGIN");
-                Statement programBody = new Statement1Parse1();
-                programBody.parse(tokens);
+                Statement programBody = this.newBody();
+                programBody.parseBlock(tokens);
+                this.swapBody(programBody);
                 Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
                                 "Expected: END");
                 String endName = tokens.dequeue();
@@ -160,6 +151,12 @@ public final class Program1Parse1 extends Program1 {
                                 "Program name mismatch: expected " + programName
                                                 + ", but got " + endName);
 
+                this.swapContext(context);
+
+                // ensure no extra tokens remain
+                Reporter.assertElseFatalError(
+                                tokens.dequeue().equals(Tokenizer.END_OF_INPUT),
+                                "Unexpected tokens after program end");
         }
 
         /*

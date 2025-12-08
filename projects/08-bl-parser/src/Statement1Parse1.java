@@ -65,29 +65,47 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: <\"IF\"> is proper prefix of tokens";
 
         // TODO - fill in body
+        // remove IF
         tokens.dequeue();
-        String a = tokens.dequeue();
-        Reporter.assertElseFatalError(Tokenizer.isCondition(a),
-                "Expected condition string, got: " + a);
-        Condition b = parseCondition(a);
+
+        // read condition
+        String condName = tokens.dequeue();
+        Reporter.assertElseFatalError(Tokenizer.isCondition(condName),
+                "Expected condition string, got: " + condName);
+        Condition cond = parseCondition(condName);
+
+        // expect THEN
         Reporter.assertElseFatalError(tokens.dequeue().equals("THEN"),
                 "Expected: THEN");
 
-        Statement c = new Statement1Parse1();
-        c.parse(tokens);
-        if (tokens.front().equals("ELSE")) {
-            tokens.dequeue();
-            Statement d = new Statement1Parse1();
-            d.parse(tokens);
-            Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
-                    "Expected: END");
-            s.assembleIfElse(b, c, d);
-        } else {
-            Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
-                    "Expected: END");
-            s.assembleIf(b, c);
-        }
+        // THEN block
+        Statement thenBlock = s.newInstance();
+        thenBlock.parseBlock(tokens);
 
+        // check if ELSE exists
+        if (tokens.front().equals("ELSE")) {
+            tokens.dequeue(); // remove ELSE
+
+            Statement elseBlock = s.newInstance();
+            elseBlock.parseBlock(tokens);
+
+            // expect END IF
+            Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
+                    "Expected: END");
+            Reporter.assertElseFatalError(tokens.dequeue().equals("IF"),
+                    "Expected: IF");
+
+            s.assembleIfElse(cond, thenBlock, elseBlock);
+
+        } else {
+            // no ELSE → expect END IF
+            Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
+                    "Expected: END");
+            Reporter.assertElseFatalError(tokens.dequeue().equals("IF"),
+                    "Expected: IF");
+
+            s.assembleIf(cond, thenBlock);
+        }
     }
 
     /**
@@ -118,19 +136,25 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: <\"WHILE\"> is proper prefix of tokens";
 
         // TODO - fill in body
-        tokens.dequeue();
-        String a = tokens.dequeue();
-        Reporter.assertElseFatalError(Tokenizer.isCondition(a),
-                "Expected condition, got: " + a);
-        Condition b = parseCondition(a);
+        tokens.dequeue(); // remove WHILE
+
+        String condName = tokens.dequeue();
+        Reporter.assertElseFatalError(Tokenizer.isCondition(condName),
+                "Expected condition, got: " + condName);
+        Condition cond = parseCondition(condName);
+
         Reporter.assertElseFatalError(tokens.dequeue().equals("DO"),
                 "Expected: DO");
-        Statement c = new Statement1Parse1();
-        c.parse(tokens);
+
+        Statement body = s.newInstance();
+        body.parseBlock(tokens);
+
         Reporter.assertElseFatalError(tokens.dequeue().equals("END"),
                 "Expected: END");
+        Reporter.assertElseFatalError(tokens.dequeue().equals("WHILE"),
+                "Expected: WHILE");
 
-        s.assembleWhile(b, c);
+        s.assembleWhile(cond, body);
     }
 
     /**
@@ -157,8 +181,8 @@ public final class Statement1Parse1 extends Statement1 {
                         + "Violation of: identifier string is proper prefix of tokens";
 
         // TODO - fill in body
-        String a = tokens.dequeue();
-        s.assembleCall(a);
+        String callName = tokens.dequeue();
+        s.assembleCall(callName);
 
     }
 
@@ -184,15 +208,16 @@ public final class Statement1Parse1 extends Statement1 {
                 + "Violation of: Tokenizer.END_OF_INPUT is a suffix of tokens";
 
         // TODO - fill in body
-        String a = tokens.front();
-        if (a.equals("IF")) {
+        String front = tokens.front();
+
+        if (front.equals("IF")) {
             parseIf(tokens, this);
-        } else if (a.equals("WHILE")) {
+        } else if (front.equals("WHILE")) {
             parseWhile(tokens, this);
-        } else if (Tokenizer.isIdentifier(a)) {
+        } else if (Tokenizer.isIdentifier(front)) {
             parseCall(tokens, this);
         } else {
-            Reporter.assertElseFatalError(false, "Unexpected token: " + a);
+            Reporter.assertElseFatalError(false, "Unexpected token: " + front);
         }
 
     }
@@ -205,11 +230,13 @@ public final class Statement1Parse1 extends Statement1 {
 
         // TODO - fill in body
         this.clear();
-        while (!tokens.front().equals("END")
-                && !tokens.front().equals("ELSE")) {
-            Statement s = new Statement1Parse1();
-            s.parse(tokens);
-            this.addToBlock(this.lengthOfBlock(), s);
+        // Block stops on END / ELSE / END_OF_INPUT
+        while (!tokens.front().equals("END") && !tokens.front().equals("ELSE")
+                && !tokens.front().equals(Tokenizer.END_OF_INPUT)) {
+
+            Statement stmt = this.newInstance();
+            stmt.parse(tokens);
+            this.addToBlock(this.lengthOfBlock(), stmt);
         }
 
     }

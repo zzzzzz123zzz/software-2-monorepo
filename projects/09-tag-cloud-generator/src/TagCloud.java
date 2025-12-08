@@ -49,7 +49,7 @@ public final class TagCloud {
         public int compare(Map.Pair<String, Integer> a,
                 Map.Pair<String, Integer> b) {
 
-            return a.key().toLowerCase().compareTo(b.key().toLowerCase());
+            return a.key().compareToIgnoreCase(b.key());
         }
     }
 
@@ -127,11 +127,7 @@ public final class TagCloud {
                     }
                 }
 
-                // move pos to end of current word or separator
-                while (pos < line.length()
-                        && !separators.contains(line.charAt(pos))) {
-                    pos++;
-                }
+                pos += word.length();
                 while (pos < line.length()
                         && separators.contains(line.charAt(pos))) {
                     pos++;
@@ -157,11 +153,14 @@ public final class TagCloud {
         final int minFont = 11;
         final int maxFont = 48;
 
-        if (max == min) {
-            return minFont;
+        int result = minFont;
+
+        if (max != min) {
+            result = minFont
+                    + (count - min) * (maxFont - minFont) / (max - min);
         }
 
-        return minFont + (count - min) * (maxFont - minFont) / (max - min);
+        return result;
     }
 
     /**
@@ -184,7 +183,7 @@ public final class TagCloud {
                 "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
         out.println("<title>Top " + n + " words in " + file + "</title>");
         out.println(
-                "<link href=\"http://web.cse.ohio-state.edu/software/2231/web-interfaces/tagcloud.css\""
+                "<link href=\"https://cse22x1.engineering.osu.edu/2231/web-sw2/assignments/projects/tag-cloud-generator/data/tagcloud.css\""
                         + " rel=\"stylesheet\" type=\"text/css\" />");
         out.println(
                 "<link href=\"tagcloud.css\" rel=\"stylesheet\" type=\"text/css\" />");
@@ -251,10 +250,8 @@ public final class TagCloud {
         SortingMachine<Map.Pair<String, Integer>> byAlpha = new SortingMachine4<>(
                 new CompareWords());
 
-        int k = 0;
-        while (k < topN && byCount.size() > 0) {
+        for (int i = 0; i < topN && byCount.size() > 0; i++) {
             byAlpha.add(byCount.removeFirst());
-            k++;
         }
         byAlpha.changeToExtractionMode();
 
@@ -278,7 +275,8 @@ public final class TagCloud {
             Map.Pair<String, Integer> p = byAlpha.removeFirst();
             int f = computeFontSize(p.value(), min, max);
 
-            fout.println("<span class=\"f" + f + "\">" + p.key() + "</span>");
+            fout.println("<span class=\"f" + f + "\" title=\"count: "
+                    + p.value() + "\">" + p.key() + "</span>");
         }
 
         printFooter(fout);

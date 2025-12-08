@@ -181,18 +181,19 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
          * representation for a complete binary tree.
          */
 
-        int a = 2 * top + 1;
-        int b = 2 * top + 2;
+        int left = 2 * top + 1;
+        int right = 2 * top + 2;
         int smallest = top;
-        if (a <= last && order.compare(array[a], array[smallest]) < 0) {
-            smallest = a;
+
+        if (left <= last && order.compare(array[left], array[smallest]) < 0) {
+            smallest = left;
         }
-        if (b <= last && order.compare(array[b], array[smallest]) < 0) {
-            smallest = b;
+        if (right <= last && order.compare(array[right], array[smallest]) < 0) {
+            smallest = right;
         }
         if (smallest != top) {
             exchangeEntries(array, top, smallest);
-            siftDown(array, smallest, last, order); // recursion!
+            siftDown(array, smallest, last, order); // recursion
         }
 
     }
@@ -407,7 +408,7 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         this.machineOrder = order;
         this.insertionMode = true;
         this.entries = new Queue1L<T>();
-        this.heap = (T[]) new Object[1000];
+        this.heap = null;
         this.heapSize = 0;
     }
 
@@ -501,7 +502,6 @@ public class SortingMachine5a<T> extends SortingMachineSecondary<T> {
         T result = this.heap[0];
         this.heapSize--;
         exchangeEntries(this.heap, 0, this.heapSize);
-        this.heap[this.heapSize] = null;
         siftDown(this.heap, 0, this.heapSize - 1, this.machineOrder);
         assert this.conventionHolds();
         return result;
