@@ -1,7 +1,10 @@
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -21,29 +24,29 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Comparator to sort HashMapMap.Pair by decreasing count.
+     * Comparator to sort Map.Entry by decreasing count.
      */
     private static class CompareCount
-            implements Comparator<HashMapMap.Pair<String, Integer>> {
+            implements Comparator<Map.Entry<String, Integer>> {
 
         @Override
-        public int compare(HashMapMap.Pair<String, Integer> a,
-                HashMapMap.Pair<String, Integer> b) {
-            return b.value().compareTo(a.value());
+        public int compare(Map.Entry<String, Integer> a,
+                Map.Entry<String, Integer> b) {
+            return b.getValue().compareTo(a.getValue());
         }
     }
 
     /**
-     * Comparator to sort HashMapMap.Pair alphabetically.
+     * Comparator to sort Map.Entry alphabetically.
      */
     private static class CompareWords
-            implements Comparator<HashMap.Pair<String, Integer>> {
+            implements Comparator<Map.Entry<String, Integer>> {
 
         @Override
-        public int compare(HashMap.Pair<String, Integer> a,
-                HashMap.Pair<String, Integer> b) {
+        public int compare(Map.Entry<String, Integer> a,
+                Map.Entry<String, Integer> b) {
 
-            return a.key().compareToIgnoreCase(b.key());
+            return a.getKey().compareToIgnoreCase(b.getKey());
         }
     }
 
@@ -93,7 +96,7 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Count words from input file into HashMapMap.
+     * Count words from input file into HashMap.
      *
      * @param file
      *            the input file name
@@ -233,29 +236,26 @@ public final class TagCloudJCF {
         countWords(inputFile, words);
 
         // Sort by count first
-        Comparator<HashMap.Pair<String, Integer>> byCount = new Comparator<>(
-                new CompareCount());
-
-        for (HashMap.Pair<String, Integer> p : words) {
-            byCount.add(p);
-        }
-        byCount.changeToExtractionMode();
+        Comparator<Map.Entry<String, Integer>> byCount = new CompareCount();
+        List<Map.Entry<String, Integer>> countList = new ArrayList<>(
+                words.entrySet());
+        countList.sort(byCount);
 
         // Pick top N → sort alphabetically
-        Comparator<HashMap.Pair<String, Integer>> byAlpha = new Comparator<>(
-                new CompareWords());
+        Comparator<Map.Entry<String, Integer>> byAlpha = new CompareWords();
 
-        for (int i = 0; i < topN && byCount.size() > 0; i++) {
-            byAlpha.add(byCount.removeFirst());
+        List<Map.Entry<String, Integer>> alphaList = new ArrayList<>();
+        for (int i = 0; i < topN && countList.size() > 0; i++) {
+            alphaList.add(countList.get(i));
         }
-        byAlpha.changeToExtractionMode();
+        alphaList.sort(byAlpha);
 
         // compute min/max
         int min = Integer.MAX_VALUE;
         int max = 0;
 
-        for (HashMap.Pair<String, Integer> p : byAlpha) {
-            int v = p.value();
+        for (Map.Entry<String, Integer> p : alphaList) {
+            int v = p.getValue();
             if (v < min) {
                 min = v;
             }
@@ -266,12 +266,12 @@ public final class TagCloudJCF {
 
         // Output
         printHeader(fout, inputFile, topN);
-        while (byAlpha.size() > 0) {
-            HashMap.Pair<String, Integer> p = byAlpha.removeFirst();
-            int f = computeFontSize(p.value(), min, max);
+        while (alphaList.size() > 0) {
+            Map.Entry<String, Integer> p = alphaList.removeFirst();
+            int f = computeFontSize(p.getValue(), min, max);
 
             fout.println("<span class=\"f" + f + "\" title=\"count: "
-                    + p.value() + "\">" + p.key() + "</span>");
+                    + p.getValue() + "\">" + p.getKey() + "</span>");
         }
 
         printFooter(fout);
