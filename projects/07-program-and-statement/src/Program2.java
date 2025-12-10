@@ -220,10 +220,6 @@ public class Program2 extends ProgramSecondary {
         Statement empty = old.newInstance();
         empty.clear(); // ensures it's composed of no statements
 
-        // Replace this.body with a new empty BLOCK
-        this.body = old.newInstance();
-        this.body.clear();
-
         return empty;
     }
 
