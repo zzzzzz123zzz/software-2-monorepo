@@ -17,7 +17,7 @@ import java.util.Set;
  * TagCloud generates an XHTML file containing a tag cloud of the top N most
  * frequent words from an input text file using standard Java components.
  *
- * @author Your Names
+ * @author LEO ZHUANG, JENG ZHUANG, MICHAEL XU
  */
 public final class TagCloudJCF {
 
@@ -54,7 +54,10 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Builds the set of separator characters.
+     * Builds and returns the set of characters considered separators between
+     * words.
+     *
+     * @return set of separator characters
      */
     private static Set<Character> buildSeparators() {
         String sep = " \t\n\r,-.!?[]';:/(){}*\"<>`";
@@ -66,7 +69,15 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Extract the next word starting at pos.
+     * Extracts the next word in a string starting at the given position.
+     *
+     * @param s
+     *            the full input string
+     * @param start
+     *            the starting index
+     * @param sep
+     *            set of separator characters
+     * @return the next word, or the empty string if none found
      */
     private static String nextWord(String s, int start, Set<Character> sep) {
         int i = start;
@@ -83,7 +94,13 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Count words in a file using BufferedReader.
+     * Counts the occurrences of each word in the given file and stores the
+     * counts in the provided map.
+     *
+     * @param file
+     *            the name of the input file
+     * @param map
+     *            map from words to their frequencies
      */
     private static void countWords(String file, Map<String, Integer> map) {
         Set<Character> separators = buildSeparators();
@@ -118,7 +135,15 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Computes a font size between 11 and 48.
+     * Computes a font size between 11 and 48 based on word frequency.
+     *
+     * @param count
+     *            the frequency of the current word
+     * @param min
+     *            minimum word count among the selected top N words
+     * @param max
+     *            maximum word count among the selected top N words
+     * @return an integer font size between 11 and 48
      */
     private static int computeFontSize(int count, int min, int max) {
         final int minFont = 11;
@@ -134,6 +159,16 @@ public final class TagCloudJCF {
         return result;
     }
 
+    /**
+     * Prints the XHTML header section of the tag cloud file.
+     *
+     * @param out
+     *            writer to output file
+     * @param file
+     *            input file name
+     * @param n
+     *            number of displayed words
+     */
     private static void printHeader(PrintWriter out, String file, int n) {
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
         out.println(
@@ -155,7 +190,10 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Prints the footer of the HTML file.
+     * Prints the XHTML footer section of the tag cloud output file.
+     *
+     * @param out
+     *            writer to output file
      */
     private static void printFooter(PrintWriter out) {
         out.println("</p>");
@@ -165,7 +203,15 @@ public final class TagCloudJCF {
     }
 
     /**
-     * Main method.
+     * Main method for generating a tag cloud XHTML file.
+     *
+     * @param args
+     *            command-line arguments (not used)
+     *
+     * @requires args != null
+     * @ensures The program prompts the user for input/output filenames and N,
+     *          then generates a valid XHTML file containing a tag cloud of the
+     *          top N most frequent words from the specified input file.
      */
     public static void main(String[] args) {
 
