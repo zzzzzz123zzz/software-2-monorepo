@@ -187,10 +187,7 @@ public class Program2 extends ProgramSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        Map<String, Statement> old = this.context;
-        this.context = old.newInstance();
-        return old;
+        return this.context.newInstance();
     }
 
     @Override
@@ -216,10 +213,18 @@ public class Program2 extends ProgramSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
+        // Save old body but do not modify it
         Statement old = this.body;
+
+        // Create new empty body
+        Statement empty = old.newInstance();
+        empty.clear(); // ensures it's composed of no statements
+
+        // Replace this.body with a new empty BLOCK
         this.body = old.newInstance();
-        return old;
+        this.body.clear();
+
+        return empty;
     }
 
     @Override
